@@ -1,0 +1,205 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+    {% block content %}
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="card navbar-bg-color text-dark text-start rounded-0">
+            <div class="card-body"><a href="#"><img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="mr-2 rounded-circle"><span
+                  class="card_font" style="text-transform: capitalize;">{{user.first_name}} {{user.last_name}}</span></a></div>
+            <div class="card-body"><a href="#"><img width="30px" src="{% static 'Images/group.png' %}" alt="" class="mr-2"><span
+                  class="card_font">Arkadaşlar</span></a></div>
+            <div class="card-body"><a href="#"><img width="30px" src="{% static 'Images/group.png' %}" alt="" class="mr-2"><span
+                  class="card_font">Gruplar</span></a></div>
+            <div class="card-body"><a href="#"><img width="30px" src="{% static 'Images/application.png' %}" alt="" class="mr-2"><span
+                  class="card_font">Ayarlar Ve Gizlilik</span></a></div>
+          </div>
+        </div> <!-- COL-SM-3 END -->
+        <div class="col-sm-6">
+          <form action="upload" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div
+              class="card navbar-bg-color text-dark text-start row list-group list-group-horizontal justify-content-center text-center border border-black rounded-0">
+              <div class="input-group m-3">
+                <img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="m-3 rounded-circle">
+                <input name="caption" type="text" class="form-control rounded-pill card_font" placeholder="İstediğinizi Paylaşın"
+                  aria-label="text" aria-describedby="basic-addon1">
+                  <input type="file" class="list-group-item form-control" id="inputGroupFile01" name="image_upload" style="display: none;" onchange="displaySelectedFile()">
+                  <label class="input-group-text navbar-bg-color rounded-0 border-0 list-group-item" for="inputGroupFile01" onclick="document.getElementById('inputGroupFile01').click(); event.preventDefault();">
+                      <img src="{% static 'Images/image.png' %}" width="50px" alt="Resim" class="img-thumbnail" id="selectedImage">
+                  </label>
+              </div>
+              <div class="list-group list-group-item navbar-bg-color border-0">
+                <button type="submit" class="btn btn-outline-primary">Yükle</button>
+              </div>
+
+            </div> <!-- CARd END -->
+          </form>
+          {% for post in posts %}
+          {% if post.image %}
+          <div
+            class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+            <div class="input-group m-3">
+              <img width="30px" src="" alt="" class="mx-2"><span class="card_font">{{post.user}}</span>
+            </div><!-- CARD-HEADER END -->
+            <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+              <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center">
+              <p class="p-font">{{post.caption}}</p>
+            </div> <!-- CARD-BODY END -->
+            <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+              <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
+              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+              </div>
+              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+              <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+              </div>
+            </div>
+          </div> <!-- CARD END -->
+          {% else %}
+          <div
+            class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+            <div class="input-group m-3">
+              <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span class="card_font">{{post.user}}</span>
+            </div><!-- CARD-HEADER END -->
+            <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+              <p class="p-font">{{post.caption}}</p>
+            </div> <!-- CARD-BODY END -->
+            <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+              <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
+              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+              </div>
+              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+              <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                    class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+              </div>
+            </div>
+          </div> <!-- CARD END -->
+          {% endif %}
+          {% endfor %}
+
+        </div> <!-- COL-SM-6 END -->
+        <div class="col-sm-3">
+          <div class="card navbar-bg-color text-dark text-start rounded-0">
+            <div class="card-body li_font"><b>Kişiler</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
+            <div class="card-body">
+              <a href="#">
+              <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+              <span class="card_font">Meriç Kaya</span>
+            </a>
+            <a href="#">
+              <i class="fa-solid fa-user-plus float-end"></i>
+            </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+          </div> <!-- CARD END / KISILER --> 
+
+          <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
+            <div class="card-body li_font"><b>Sohbet Grupları</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
+            <div class="card-body pt-0">
+              <a href="#">
+                <i class="fa-solid fa-plus mr-1 border border-black rounded rounded-circle p-1"></i>
+                <span class="card_font">Yeni Grup Kur</span>
+              </a>
+            </div>
+          </div> <!-- CARD END -->
+        </div> <!-- COL-SM-3 END -->
+      </div> <!-- ROW END -->
+    </div> <!-- CONTAINER END -->
+
+    <div id="message_box">
+      
+    </div>
+
+
+
+  <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script>
+
+    let liDOM = document.querySelectorAll('li')
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseover', function(){
+        s.classList.add('bg-primary')
+      })
+    })
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseout', function(){
+        s.classList.remove('bg-primary')
+      })
+    })
+    function displaySelectedFile() {
+        var input = document.getElementById('inputGroupFile01');
+        var image = document.getElementById('selectedImage');
+        
+        // Dosya seçilmişse ve bir resim dosyasıysa
+        if (input.files && input.files[0] && input.files[0].type.startsWith('image/')) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                image.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function displaySelectedFile2() {
+        var input = document.getElementById('inputGroupFile02');
+        var image = document.getElementById('selectedImage2');
+        
+        // Dosya seçilmişse ve bir resim dosyasıysa
+        if (input.files && input.files[0] && input.files[0].type.startsWith('image/')) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                image.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+  </script>
+  </body>
+</html>
+{% endblock %}

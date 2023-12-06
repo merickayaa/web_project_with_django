@@ -1,0 +1,286 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+    {% block content %}
+
+    <div class="container mt-4">
+      <div class="row">
+    
+        <div class="col-sm-9">
+
+            <div class="card navbar-bg-color rounded-0" style="text-transform: capitalize;">
+                <div class="card-header navbar-bg-color p-4">
+                    <button id="user"><img src="{{profile.profileimg.url}}" width="100px" class="rounded-circle border" alt="..."></button>
+                    <h3 class="card-title li_font">{{user.first_name}} {{user.last_name}}</h3>
+                    <div class="float-end">
+                        <button type="button" class="rounded-circle" id="myBtn">
+                            <i class="fa-solid fa-pen fa-lg py-3 px-2"></i>
+                        </button>
+                    </div>
+                    <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                    <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
+                        <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt=""> 
+                        <span class="li_font p-2" style="font-size: 20px;"> {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Mesleğiniz</h3>
+                    <p class="p-font border-bottom border-black">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                    <h5 class="li_font">Şirket Adı</h5>
+                    <p class="p-font border-bottom border-black">{{ profile.company_name}}<!--Apple--></p>
+                    <h5 class="li_font">Çalışma Türü</h5>
+                    <p class="p-font border-bottom border-black">{{ profile.type_of_work}}<!--Uzaktan --></p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Eğitim</h3>
+                    <h5 class="li_font">Fakülteniz</h5>
+                    <p class="p-font border-bottom border-black">{{profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Konum</h3>
+                    <h5 class="li_font">Ülke</h5>
+                    <p class="p-font border-bottom border-black">{{profile.country}}<!--Türkiye --></p>
+                    <h5 class="li_font">Şehir</h5>
+                    <p class="p-font border-bottom border-black">{{profile.city}}<!--İstanbul --></p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">İletişim</h3>
+                    <h5 class="li_font">Email Adresi</h5>
+                    <p><a href="mailto:{{user.email}}" class="p-font border-bottom border-black">{{user.email}}</a></p>
+                    <h5 class="li_font">Telefon Numarası</h5>
+                    <p class="p-font border-bottom border-black">{{profile.phone_number}}<!--05555555555 --></p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Doğum Günü</h3>
+                    <p class="p-font border-bottom border-black">{{profile.birthday}}<!--09.12.2004 --></p>
+                </div>
+            </div>
+        </div> <!-- COL-SM-6 END -->
+
+        <div class="col-sm-3">
+          <div class="card navbar-bg-color text-dark text-start rounded-0">
+            <div class="card-body li_font"><b>Kişiler</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
+            <div class="card-body">
+              <a href="#">
+              <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+              <span class="card_font">Meriç Kaya</span>
+            </a>
+            <a href="#">
+              <i class="fa-solid fa-user-plus float-end"></i>
+            </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+          </div> <!-- CARD END / KISILER --> 
+
+          <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
+            <div class="card-body li_font"><b>Sohbet Grupları</b><button id="myBtn"><i class="fa-solid fa-magnifying-glass float-end"></i></button></div>
+            <div class="card-body pt-0">
+              <a href="#">
+                <i class="fa-solid fa-plus mr-1 border border-black rounded rounded-circle p-1"></i>
+                <span class="card_font">Yeni Grup Kur</span>
+              </a>
+            </div>
+          </div> <!-- CARD END -->
+        </div> <!-- COL-SM-3 END -->
+      </div> <!-- ROW END -->
+    </div> <!-- CONTAINER END -->
+
+    <div id="message_box">
+      
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" tabindex="-1" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Profili Düzenle</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="top_close"></button>
+          </div>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-body">
+              <div id="profile_photo">
+                <h3 class="p-font">Profil Fotoğrafınızı Değiştirin</h3>
+                <hr>
+                <div class="mb-3">
+                  <img class="rounded rounded-circle" src="{{profile.profileimg.url}}" alt="" width="100px">
+                  <input type="file" class="form-control card_font w-75" id="image" name="image">
+                </div>
+              </div>
+            </div>
+            <div class="modal-body">
+              <div id="meslek">
+                <h3 class="p-font">Mesleğiniz</h3>
+                <div class="mb-3">
+                  <label class="for li_font">Başlık</label>
+                  <input type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{profile.job}}" name="job">
+                  <div id="titleHelp" class="form-text">Örn: Perakende Satış Müdürü</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label li_font">Şirket Adı</label>
+                  <input name="company_name" value="{{profile.company_name}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                  <div id="companyHelp" class="form-text">Örn: Apple</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label li_font">Çalışma Türü</label>
+                  <select id="workSelect" value="{{profile.type_of_work}}" name="types_work" class="form-select" aria-label="Default select example">
+                    <option name="o1">Lütfen Seçin</option>
+                    <option name="o2">Uzaktan</option>
+                    <option name="o3">Ofisten</option>
+                    <option name="o4">Hibrit</option>
+                  </select>
+                </div>
+              </div>
+              <div id="egitim">
+                <h3 class="p-font">Eğitim</h3>
+                <div class="mb-3">
+                  <label class="form-label li_font">Fakülteniz</label>
+                  <select id="collegeSelect" value="{{profile.college}}" name="college" class="form-select" aria-label="Default select example">
+                    <option>Lütfen Seçin</option>
+                    <option>Edremit Meslek YüksekOkulu</option>
+                    <option>Altınoluk Meslek YüksekOkulu</option>
+                    <option>Balıkesir Meslek YüksekOkulu</option>
+                  </select>
+                  <div id="SchoolHelp" class="form-text">Örn: Edremit Meslek YüksekOkulu</div>
+                </div>
+              </div>
+              <div id="location">
+                <h3 class="p-font">Konum</h3>
+                <div class="mb-3">
+                  <label class="form-label li_font">Ülke</label>
+                  <input name="country" value="{{profile.country}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                  <div id="locationHelp" class="form-text">Örn: Türkiye</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label li_font">Şehir</label>
+                  <input name="city" value="{{profile.city}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                  <div id="cityHelp" class="form-text">Örn: İstanbul</div>
+                </div>
+              </div>
+              <div id="iletisim">
+                <h3 class="p-font">İletişim</h3>
+                <div class="mb-3">
+                  <label class="form-label li_font">Telefon Numarası</label>
+                  <input name="phone_number" value="{{profile.phone_number}}" type="tel" class="form-control card_font" id="numberInput">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label li_font">Doğum Günü</label>
+                  <div class="d-flex">
+                    <input name="birthday" value="{{profile.birthday}}" type="text" class="form-control" id="birthdayInput" placeholder="DD-MM-YYYY">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="close" data-bs-dismiss="modal">Kapat</button>
+              <button type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div> <!-- MODAL END -->
+
+  <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("close")
+    var top_close = document.getElementById("top_close")
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    top_close.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    let liDOM = document.querySelectorAll('li')
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseover', function(){
+        s.classList.add('bg-primary')
+      })
+    })
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseout', function(){
+        s.classList.remove('bg-primary')
+      })
+    })
+    $(document).ready(function () {
+        const collegeSelect = $("#collegeSelect");
+        
+        // Önceki seçim varsa, seçimi ayarla
+        let previousSelection = localStorage.getItem("previousSelection");
+        if (previousSelection !== null) {
+            collegeSelect.val(previousSelection);
+        }
+
+        // Kullanıcı yeni bir seçim yaptığında, seçimi sakla
+        collegeSelect.on('change', function () {
+            localStorage.setItem("previousSelection", collegeSelect.val());
+        });
+    });
+    $(document).ready(function () {
+        const workSelect = $("#workSelect");
+        
+        // Önceki seçim varsa, seçimi ayarla
+        let previousSelectionWORK = localStorage.getItem("previousSelectionWORK");
+        if (previousSelectionWORK !== null) {
+          workSelect.val(previousSelectionWORK);
+        }
+
+        // Kullanıcı yeni bir seçim yaptığında, seçimi sakla
+        workSelect.on('change', function () {
+            localStorage.setItem("previousSelectionWORK", workSelect.val());
+        });
+    });
+  </script>
+  </body>
+</html>
+{% endblock %}
