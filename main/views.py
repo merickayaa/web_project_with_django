@@ -44,6 +44,7 @@ def like_post(request):
         post.no_of_likes = post.no_of_likes-1
         post.save()
         return redirect('/')
+    
 
 def signup(request):
     if request.method == 'POST':
