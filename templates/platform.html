@@ -35,7 +35,7 @@
 
             </div> <!-- CARd END -->
           </form>
-          {% for post in posts %}
+          {% for post in posts reversed %}
           {% if post.image %}
           <div
             class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
@@ -69,17 +69,22 @@
               <p class="p-font">{{post.caption}}</p>
             </div> <!-- CARD-BODY END -->
             <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
-              <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a href="#"><i
+              <div class="col-sm-2 list-group-item  p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
                     class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
-              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+              <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
                     class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
               </div>
-              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+              <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
                     class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
-              <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+              <div class="col-sm-2 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
                     class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
               </div>
             </div>
+            {% if post.no_of_likes == 0 %}
+            
+            {% else %}
+            <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
+            {% endif %}
           </div> <!-- CARD END -->
           {% endif %}
           {% endfor %}
