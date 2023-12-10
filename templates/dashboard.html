@@ -6,55 +6,77 @@
       <div class="row">
     
         <div class="col-sm-9">
-
-            <div class="card navbar-bg-color rounded-0" style="text-transform: capitalize;">
+          <p class="d-inline-flex gap-1">
+            <a class="btn btn-primary" id="Personal_button" data-bs-toggle="collapse" href="#Personal" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Kişisel Bilgiler
+            </a>
+            <button class="btn btn-primary" type="button" id="Posts_button" data-bs-toggle="collapse" data-bs-target="#Posts" aria-expanded="false" aria-controls="collapseExample">
+              Paylaşılanlar
+            </button>
+          </p>
+          <div class="collapse" id="Personal">
+              <div class="card navbar-bg-color rounded-0 border-0" style="text-transform: capitalize;">
                 <div class="card-header navbar-bg-color p-4">
-                    <button id="user"><img src="{{profile.profileimg.url}}" width="100px" class="rounded-circle border" alt="..."></button>
-                    <h3 class="card-title li_font">{{user.first_name}} {{user.last_name}}</h3>
-                    <div class="float-end">
-                        <button type="button" class="rounded-circle" id="myBtn">
-                            <i class="fa-solid fa-pen fa-lg py-3 px-2"></i>
-                        </button>
-                    </div>
-                    <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
-                    <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
-                        <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt=""> 
-                        <span class="li_font p-2" style="font-size: 20px;"> {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                  <button id="user"><img src="{{profile.profileimg.url}}" width="100px" class="rounded-circle border"
+                      alt="..."></button>
+                  <h3 class="card-title li_font">{{user.first_name}} {{user.last_name}}</h3>
+                  <div class="float-end">
+                    <button type="button" class="rounded-circle" id="myBtn">
+                      <i class="fa-solid fa-pen fa-lg py-3 px-2"></i>
                     </button>
+                  </div>
+                  <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                  <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
+                    <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
+                    <span class="li_font p-2" style="font-size: 20px;">
+                      {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                  </button>
                 </div>
                 <div class="card-body">
-                    <h3 class="li_font mb-3">Mesleğiniz</h3>
-                    <p class="p-font border-bottom border-black">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
-                    <h5 class="li_font">Şirket Adı</h5>
-                    <p class="p-font border-bottom border-black">{{ profile.company_name}}<!--Apple--></p>
-                    <h5 class="li_font">Çalışma Türü</h5>
-                    <p class="p-font border-bottom border-black">{{ profile.type_of_work}}<!--Uzaktan --></p>
+                  <h3 class="li_font mb-3">Mesleğiniz</h3>
+                  <p class="p-font border-bottom border-black">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                  <h5 class="li_font">Şirket Adı</h5>
+                  <p class="p-font border-bottom border-black">{{ profile.company_name}}<!--Apple--></p>
+                  <h5 class="li_font">Çalışma Türü</h5>
+                  <p class="p-font border-bottom border-black">{{ profile.type_of_work}}<!--Uzaktan --></p>
                 </div>
                 <div class="card-body">
-                    <h3 class="li_font mb-3">Eğitim</h3>
-                    <h5 class="li_font">Fakülteniz</h5>
-                    <p class="p-font border-bottom border-black">{{profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
+                  <h3 class="li_font mb-3">Eğitim</h3>
+                  <h5 class="li_font">Fakülteniz</h5>
+                  <p class="p-font border-bottom border-black">{{profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
                 </div>
                 <div class="card-body">
-                    <h3 class="li_font mb-3">Konum</h3>
-                    <h5 class="li_font">Ülke</h5>
-                    <p class="p-font border-bottom border-black">{{profile.country}}<!--Türkiye --></p>
-                    <h5 class="li_font">Şehir</h5>
-                    <p class="p-font border-bottom border-black">{{profile.city}}<!--İstanbul --></p>
+                  <h3 class="li_font mb-3">Konum</h3>
+                  <h5 class="li_font">Ülke</h5>
+                  <p class="p-font border-bottom border-black">{{profile.country}}<!--Türkiye --></p>
+                  <h5 class="li_font">Şehir</h5>
+                  <p class="p-font border-bottom border-black">{{profile.city}}<!--İstanbul --></p>
                 </div>
                 <div class="card-body">
-                    <h3 class="li_font mb-3">İletişim</h3>
-                    <h5 class="li_font">Email Adresi</h5>
-                    <p><a href="mailto:{{user.email}}" class="p-font border-bottom border-black">{{user.email}}</a></p>
-                    <h5 class="li_font">Telefon Numarası</h5>
-                    <p class="p-font border-bottom border-black">{{profile.phone_number}}<!--05555555555 --></p>
+                  <h3 class="li_font mb-3">İletişim</h3>
+                  <h5 class="li_font">Email Adresi</h5>
+                  <p><a href="mailto:{{user.email}}" class="p-font border-bottom border-black">{{user.email}}</a></p>
+                  <h5 class="li_font">Telefon Numarası</h5>
+                  <p class="p-font border-bottom border-black">{{profile.phone_number}}<!--05555555555 --></p>
                 </div>
                 <div class="card-body">
-                    <h3 class="li_font mb-3">Doğum Günü</h3>
-                    <p class="p-font border-bottom border-black">{{profile.birthday}}<!--09.12.2004 --></p>
+                  <h3 class="li_font mb-3">Doğum Günü</h3>
+                  <p class="p-font border-bottom border-black">{{profile.birthday}}<!--09.12.2004 --></p>
                 </div>
+              </div>
+          </div> <!--Personal End-->
+          <div class="collapse" id="Posts">
+            <div class="card card-body navbar-bg-color">
+              <div class="row">
+                {% for post in posts reversed %}
+                  <div class="col-sm-4">
+                    <img src="{{post.image.url}}" alt="">
+                  </div>
+                {% endfor %}
+              </div>
             </div>
-        </div> <!-- COL-SM-6 END -->
+          </div> <!--Posts End-->
+        </div> <!-- COL-SM-9 END -->
 
         <div class="col-sm-3">
           <div class="card navbar-bg-color text-dark text-start rounded-0">
@@ -280,6 +302,29 @@
             localStorage.setItem("previousSelectionWORK", workSelect.val());
         });
     });
+    document.addEventListener('DOMContentLoaded', function(){
+      var personal_button = document.querySelector('#Personal_button')
+      var posts_button = document.querySelector('#Posts_button')
+      var personal_col = document.querySelector('#Personal')
+      var posts_col = document.querySelector('#Posts')
+      personal_col.classList.add('show')
+      personal_button.addEventListener('click', function(){
+        if (posts_col.classList.contains('show')){
+          posts_col.classList.remove('show')
+          personal_col.classList.add('show')
+        }else{
+          personal_col.classList.remove('show')
+        }
+      })
+      posts_button.addEventListener('click', function(){
+        if (personal_col.classList.contains('show')){
+          personal_col.classList.remove('show')
+          posts_col.classList.add('show')
+        }else{
+          posts_col.classList.remove('show')
+        }
+      })
+    })
   </script>
   </body>
 </html>

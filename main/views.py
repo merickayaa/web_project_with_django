@@ -114,6 +114,7 @@ def Logout(request):
 @login_required(login_url='signin')
 def dashboard(request):
     profile = User.objects.get(username=request.user.username)
+    posts = Post.objects.filter(user=request.user)
     if request.method == 'POST':
         if request.FILES.get('image') == None:
             image = profile.profileimg
@@ -169,7 +170,7 @@ def dashboard(request):
             profile.save()
         return redirect('dashboard')
 
-    return render(request, 'dashboard.html', {'profile':profile})
+    return render(request, 'dashboard.html', {'profile':profile, 'posts':posts})
 
 
 
