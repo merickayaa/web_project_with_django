@@ -3,8 +3,8 @@ from django.contrib.auth import get_user_model
 from datetime import datetime
 import uuid
 from django.contrib.auth.models import AbstractUser
-
-
+from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 
 
@@ -44,8 +44,18 @@ class User(AbstractUser):
     city = models.CharField(max_length=100, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     birthday = models.DateField(max_length=10, null=True, blank=True)
+    slug = models.SlugField(max_length=50, unique=True)
+
     def __str__(self):
         return self.username
+
+    def get_absolute_url(self):
+        return reverse("dashboard", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):  # new
+        if not self.slug:
+            self.slug = slugify(self.username)
+        return super().save(*args, **kwargs)
 
 
 
