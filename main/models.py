@@ -53,8 +53,9 @@ class User(AbstractUser):
         return reverse("dashboard", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):  # new
-        if not self.slug:
-            self.slug = slugify(self.username)
+        if not self.slug or self.username != self.slug:
+            unique_value = self.id
+            self.slug = slugify(unique_value)
         return super().save(*args, **kwargs)
 
 

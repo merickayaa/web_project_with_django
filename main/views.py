@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate,login, logout
 from django.contrib import messages
@@ -55,6 +55,7 @@ def signup(request):
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
+        slug = request.POST['username']
         if len(userno) == 12:
             fifth_value =[int(userno[4]),int(userno[5]),int(userno[6])]
             num_str = ''.join(map(str,fifth_value))
@@ -69,7 +70,7 @@ def signup(request):
                         messages.info(request, "Kullanıcı Adı Zaten Kullanılıyor!")
                         return redirect('signup')
                     else:
-                        user = User.objects.create_user(first_name=firstname,last_name=lastname,username=username, student_no=userno, email=email, password=password)
+                        user = User.objects.create_user(first_name=firstname,last_name=lastname,username=username, student_no=userno, email=email, password=password, slug=slug)
                         user.save()
 
                         user_login = authenticate(username=username,password=password)
@@ -112,9 +113,9 @@ def Logout(request):
 
 
 @login_required(login_url='signin')
-def dashboard(request):
-    profile = User.objects.get(username=request.user.username)
-    posts = Post.objects.filter(user=request.user)
+def dashboard(request, user_slug):
+    profile = get_object_or_404(User, slug=user_slug)
+    posts = Post.objects.filter(user=profile)
     if request.method == 'POST':
         if request.FILES.get('image') == None:
             image = profile.profileimg

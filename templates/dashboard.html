@@ -19,7 +19,7 @@
                 <div class="card-header navbar-bg-color p-4">
                   <button id="user"><img src="{{profile.profileimg.url}}" width="100px" class="rounded-circle border"
                       alt="..."></button>
-                  <h3 class="card-title li_font">{{user.first_name}} {{user.last_name}}</h3>
+                  <h3 class="card-title li_font">{{profile.first_name}} {{profile.last_name}}</h3>
                   <div class="float-end">
                     <button type="button" class="rounded-circle" id="myBtn">
                       <i class="fa-solid fa-pen fa-lg py-3 px-2"></i>
@@ -55,7 +55,7 @@
                 <div class="card-body">
                   <h3 class="li_font mb-3">İletişim</h3>
                   <h5 class="li_font">Email Adresi</h5>
-                  <p><a href="mailto:{{user.email}}" class="p-font border-bottom border-black">{{user.email}}</a></p>
+                  <p><a href="mailto:{{profile.email}}" class="p-font border-bottom border-black">{{profile.email}}</a></p>
                   <h5 class="li_font">Telefon Numarası</h5>
                   <p class="p-font border-bottom border-black">{{profile.phone_number}}<!--05555555555 --></p>
                 </div>
