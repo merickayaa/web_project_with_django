@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate,login, logout
 from django.contrib import messages
-from .models import Post, User,LikePost
+from .models import Post, User,LikePost, Follower
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
@@ -114,8 +114,17 @@ def Logout(request):
 
 @login_required(login_url='signin')
 def dashboard(request, user_slug):
-    profile = get_object_or_404(User, slug=user_slug)
+    profile = User.objects.get(slug=user_slug)
     posts = Post.objects.filter(user=profile)
+    follower = request.user.username
+    user = user_slug
+    followerCount = len(Follower.objects.filter(follower=follower, user=user))
+    postCount = len(posts)
+    followingCount = len(Follower.objects.filter(follower=user_slug))
+    if Follower.objects.filter(follower=follower, user=user):
+        button_text = 'Takibi Birak'
+    else:
+        button_text = 'Takip Et'
     if request.method == 'POST':
         if request.FILES.get('image') == None:
             image = profile.profileimg
@@ -171,7 +180,25 @@ def dashboard(request, user_slug):
             profile.save()
         return redirect('dashboard')
 
-    return render(request, 'dashboard.html', {'profile':profile, 'posts':posts})
+    return render(request, 'dashboard.html', {'user_profile':profile, 'posts':posts, 'button_text':button_text,'followerCount':followerCount,'postCount':postCount, 'followingCount':followingCount})
 
 
-
+@login_required(login_url='signin')
+def follow(request):
+    if request.method == 'POST':
+        follower = request.POST['follower']
+        user = request.POST['user']
+        print("1: ",follower)
+        print("2: ",user)
+        if Follower.objects.filter(follower=follower, user=user).first():
+            delete_follower = Follower.objects.get(follower=follower, user=user)
+            print("3: ",delete_follower)
+            delete_follower.delete()
+            return redirect('/dashboard/'+user)
+        else:
+            new_follower = Follower.objects.create(follower=follower,user=user)
+            print("4: ",new_follower)
+            new_follower.save()
+            return redirect('/dashboard/'+user)
+    else:
+        return redirect('/')

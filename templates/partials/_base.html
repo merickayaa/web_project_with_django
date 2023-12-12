@@ -50,7 +50,7 @@
       color: black;
     }
     .navbar-bg-color{
-      background-color: rgb(233, 233, 219);
+      background-color: rgb(233, 233, 219) !important;
     }
     .center {
       display: block;
@@ -81,7 +81,7 @@
             <li class="nav-item dropdown">
               <button class="nav-link navbar-brand dropdown-toggle" data-bs-toggle="dropdown" ><img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="mr-1 rounded-circle"><span style="text-transform: uppercase;" class="ml-1 mr-2 li_font">{{user.first_name}} {{user.last_name}}</span></button>
               <ul class="dropdown-menu">
-                <div><a class="nav-link navbar-brand dropdown-item" href="{% if profile.slug %}{% url 'dashboard' user_slug=profile.slug %}{% else %}{% url 'dashboard' user_slug=user_profile.slug %}{% endif %}">Profil</a></div>
+                <div><a class="nav-link navbar-brand dropdown-item" href="{% url 'dashboard' request.user.username %}">Profil</a></div>
                 <div><a class="nav-link navbar-brand dropdown-item" href="#">Ayarlar</a></div>
                 <div><a class="nav-link navbar-brand dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></div>
               </ul>

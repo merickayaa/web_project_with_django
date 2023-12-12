@@ -44,7 +44,7 @@ class User(AbstractUser):
     city = models.CharField(max_length=100, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     birthday = models.DateField(max_length=10, null=True, blank=True)
-    slug = models.SlugField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True, null=True)
 
     def __str__(self):
         return self.username
@@ -79,3 +79,9 @@ class LikePost(models.Model):
     def __str__(self):
         return self.username
 
+class Follower(models.Model):
+    follower = models.CharField(max_length=100)
+    user = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user

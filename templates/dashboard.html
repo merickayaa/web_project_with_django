@@ -7,74 +7,152 @@
     
         <div class="col-sm-9">
           <p class="d-inline-flex gap-1">
-            <a class="btn btn-primary" id="Personal_button" data-bs-toggle="collapse" href="#Personal" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn btn-primary" id="Personal_button" data-bs-toggle="collapse" href="#Personal" role="button"
+              aria-expanded="false" aria-controls="collapseExample">
               Kişisel Bilgiler
             </a>
-            <button class="btn btn-primary" type="button" id="Posts_button" data-bs-toggle="collapse" data-bs-target="#Posts" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn btn-primary" type="button" id="Posts_button" data-bs-toggle="collapse" data-bs-target="#Posts"
+              aria-expanded="false" aria-controls="collapseExample">
               Paylaşılanlar
             </button>
           </p>
           <div class="collapse" id="Personal">
-              <div class="card navbar-bg-color rounded-0 border-0" style="text-transform: capitalize;">
-                <div class="card-header navbar-bg-color p-4">
-                  <button id="user"><img src="{{profile.profileimg.url}}" width="100px" class="rounded-circle border"
-                      alt="..."></button>
-                  <h3 class="card-title li_font">{{profile.first_name}} {{profile.last_name}}</h3>
-                  <div class="float-end">
-                    <button type="button" class="rounded-circle" id="myBtn">
-                      <i class="fa-solid fa-pen fa-lg py-3 px-2"></i>
-                    </button>
-                  </div>
-                  <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
-                  <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
-                    <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
-                    <span class="li_font p-2" style="font-size: 20px;">
-                      {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+            <div class="card navbar-bg-color rounded-0 border-0" style="text-transform: capitalize;">
+              <div class="card-header navbar-bg-color p-4">
+                <button id="user"><img src="{{user_profile.profileimg.url}}" width="100px" class="rounded-circle border"
+                    alt="..."></button>
+                    <ul class="list-group float-end navbar-bg-color border-0 rounded-0 text-center">
+                      <li class="list-group-item disabled navbar-bg-color border-0 rounded-0"><b style="font-size: large;">Takipçi Sayısı</b></li>
+                      <li class="list-group-item disabled navbar-bg-color border-0 rounded-0"><b style="font-size: large;">{{followerCount}}</b></li>
+                    </ul>
+                    <ul class="list-group float-end navbar-bg-color border-0 rounded-0 text-center">
+                      <li class="list-group-item disabled navbar-bg-color border-0 rounded-0"><b style="font-size: large;">Post Sayısı</b></li>
+                      <li class="list-group-item disabled navbar-bg-color border-0 rounded-0"><b style="font-size: large;">{{postCount}}</b></li>
+                    </ul>
+                    <ul class="list-group float-end navbar-bg-color border-0 rounded-0 text-center">
+                      <li class="list-group-item disabled navbar-bg-color border-0 rounded-0"><b style="font-size: large;">Takip Edilen Sayısı</b></li>
+                      <li class="list-group-item disabled navbar-bg-color border-0 rounded-0"><b style="font-size: large;">{{followingCount}}</b></li>
+                    </ul>
+                <h3 class="card-title li_font">{{user_profile.first_name}} {{user_profile.last_name}}</h3>
+                <div class="float-end">
+                  {% if user_profile == request.user %}
+                  <button type="button" class="rounded-circle" id="myBtn">
+                    <i class="fa-solid fa-pen fa-lg py-3 px-2"></i>
                   </button>
+                  {% else %}
+                  <form action="/follow" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{user_profile.username}}" name="user" />
+                    <input type="hidden" value="{{request.user.username}}" name="follower" />
+                    <button type="submit" class="rounded-circle p-2">
+                      <b class="px-2">{{button_text}}</b>
+                      <i class="fa-solid fa-user-plus float-end py-1"></i>
+                    </button>
+                  </form>
+                  {% endif %}
                 </div>
-                <div class="card-body">
-                  <h3 class="li_font mb-3">Mesleğiniz</h3>
-                  <p class="p-font border-bottom border-black">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
-                  <h5 class="li_font">Şirket Adı</h5>
-                  <p class="p-font border-bottom border-black">{{ profile.company_name}}<!--Apple--></p>
-                  <h5 class="li_font">Çalışma Türü</h5>
-                  <p class="p-font border-bottom border-black">{{ profile.type_of_work}}<!--Uzaktan --></p>
-                </div>
-                <div class="card-body">
-                  <h3 class="li_font mb-3">Eğitim</h3>
-                  <h5 class="li_font">Fakülteniz</h5>
-                  <p class="p-font border-bottom border-black">{{profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
-                </div>
-                <div class="card-body">
-                  <h3 class="li_font mb-3">Konum</h3>
-                  <h5 class="li_font">Ülke</h5>
-                  <p class="p-font border-bottom border-black">{{profile.country}}<!--Türkiye --></p>
-                  <h5 class="li_font">Şehir</h5>
-                  <p class="p-font border-bottom border-black">{{profile.city}}<!--İstanbul --></p>
-                </div>
-                <div class="card-body">
-                  <h3 class="li_font mb-3">İletişim</h3>
-                  <h5 class="li_font">Email Adresi</h5>
-                  <p><a href="mailto:{{profile.email}}" class="p-font border-bottom border-black">{{profile.email}}</a></p>
-                  <h5 class="li_font">Telefon Numarası</h5>
-                  <p class="p-font border-bottom border-black">{{profile.phone_number}}<!--05555555555 --></p>
-                </div>
-                <div class="card-body">
-                  <h3 class="li_font mb-3">Doğum Günü</h3>
-                  <p class="p-font border-bottom border-black">{{profile.birthday}}<!--09.12.2004 --></p>
-                </div>
+                <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
+                  <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
+                  <span class="li_font p-2" style="font-size: 20px;">
+                    {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                </button>
               </div>
-          </div> <!--Personal End-->
-          <div class="collapse" id="Posts">
-            <div class="card card-body navbar-bg-color">
-              <div class="row">
-                {% for post in posts reversed %}
-                  <div class="col-sm-4">
-                    <img src="{{post.image.url}}" alt="">
-                  </div>
-                {% endfor %}
+              <div class="card-body">
+                <h3 class="li_font mb-3">Mesleğiniz</h3>
+                <p class="p-font border-bottom border-black">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                <h5 class="li_font">Şirket Adı</h5>
+                <p class="p-font border-bottom border-black">{{ profile.company_name}}<!--Apple--></p>
+                <h5 class="li_font">Çalışma Türü</h5>
+                <p class="p-font border-bottom border-black">{{ profile.type_of_work}}<!--Uzaktan --></p>
+              </div>
+              <div class="card-body">
+                <h3 class="li_font mb-3">Eğitim</h3>
+                <h5 class="li_font">Fakülteniz</h5>
+                <p class="p-font border-bottom border-black">{{profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
+              </div>
+              <div class="card-body">
+                <h3 class="li_font mb-3">Konum</h3>
+                <h5 class="li_font">Ülke</h5>
+                <p class="p-font border-bottom border-black">{{profile.country}}<!--Türkiye --></p>
+                <h5 class="li_font">Şehir</h5>
+                <p class="p-font border-bottom border-black">{{profile.city}}<!--İstanbul --></p>
+              </div>
+              <div class="card-body">
+                <h3 class="li_font mb-3">İletişim</h3>
+                <h5 class="li_font">Email Adresi</h5>
+                <p><a href="mailto:{{profile.email}}" class="p-font border-bottom border-black">{{profile.email}}</a></p>
+                <h5 class="li_font">Telefon Numarası</h5>
+                <p class="p-font border-bottom border-black">{{profile.phone_number}}<!--05555555555 --></p>
+              </div>
+              <div class="card-body">
+                <h3 class="li_font mb-3">Doğum Günü</h3>
+                <p class="p-font border-bottom border-black">{{profile.birthday}}<!--09.12.2004 --></p>
               </div>
             </div>
+          </div> <!--Personal End-->
+          <div class="collapse" id="Posts">
+            {% for post in posts reversed %}
+            {% if post.image %}
+            <div
+              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+              <div class="input-group m-3">
+                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
+                  class="card_font">{{post.user}}</span>
+              </div><!-- CARD-HEADER END -->
+              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+                <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center">
+                <p class="p-font">{{post.caption}}</p>
+              </div> <!-- CARD-BODY END -->
+              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+                <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a
+                    href="/like-post?post_id={{post.id}}"><i class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span
+                      class="card_font">Beğen</span></a></div>
+                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+                </div>
+                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+                <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+                </div>
+              </div>
+              {% if post.no_of_likes == 0 %}
+        
+              {% else %}
+              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
+              {% endif %}
+            </div> <!-- CARD END -->
+            {% else %}
+            <div
+              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+              <div class="input-group m-3">
+                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
+                  class="card_font">{{post.user}}</span>
+              </div><!-- CARD-HEADER END -->
+              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+                <p class="p-font">{{post.caption}}</p>
+              </div> <!-- CARD-BODY END -->
+              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+                <div class="col-sm-2 list-group-item  p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
+                      class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
+                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+                </div>
+                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+                <div class="col-sm-2 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+                </div>
+              </div>
+              {% if post.no_of_likes == 0 %}
+        
+              {% else %}
+              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
+              {% endif %}
+            </div> <!-- CARD END -->
+            {% endif %}
+            {% endfor %}
           </div> <!--Posts End-->
         </div> <!-- COL-SM-9 END -->
 
