@@ -40,7 +40,7 @@
           <div
             class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
             <div class="input-group m-3">
-              <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span class="card_font">{{post.user}}</span>
+              <a href="{% url 'dashboard' post.user %}"><img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span class="card_font">{{post.user}}</span></a>
             </div><!-- CARD-HEADER END -->
             <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
               <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center">
@@ -68,7 +68,9 @@
           <div
             class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
             <div class="input-group m-3">
-              <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span class="card_font">{{post.user}}</span>
+              <a href="/dashboard/{{post.user}}">
+                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span class="card_font">{{post.user}}</span>
+              </a>
             </div><!-- CARD-HEADER END -->
             <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
               <p class="p-font">{{post.caption}}</p>
@@ -97,56 +99,19 @@
         </div> <!-- COL-SM-6 END -->
         <div class="col-sm-3">
           <div class="card navbar-bg-color text-dark text-start rounded-0">
-            <div class="card-body li_font"><b>Kişiler</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
-            <div class="card-body">
-              <a href="#">
-              <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-              <span class="card_font">Meriç Kaya</span>
-            </a>
-            <a href="#">
-              <i class="fa-solid fa-user-plus float-end"></i>
+            <div class="card-body li_font"><b>Kişiler</b><button type="button" class="btn float-end" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-magnifying-glass float-end"></i></button></div>
+            {% for suggestion in suggestions_username_profile_list %}
+            <div class="card-body m-0">
+              <a href="{% url 'dashboard' suggestion %}">
+              <img width="30px" src="{{suggestion.profileimg.url}}" alt="" class="mr-2">
+              <span class="card_font">{{suggestion}}</span>
             </a>
             </div>
-            <div class="card-body">
-              <a href="#">
-                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
-              </a>
-            </div>
-            <div class="card-body">
-              <a href="#">
-                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
-              </a>
-            </div>
-            <div class="card-body">
-              <a href="#">
-                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
-              </a>
-            </div>
-            <div class="card-body">
-              <a href="#">
-                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
-              </a>
-            </div>
+            {% endfor %}
           </div> <!-- CARD END / KISILER --> 
 
           <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
-            <div class="card-body li_font"><b>Sohbet Grupları</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
+            <div class="card-body li_font"><b>Sohbet Grupları</b><button type="button" id="search_button"><i class="fa-solid fa-magnifying-glass float-end"></i></button></div>
             <div class="card-body pt-0">
               <a href="#">
                 <i class="fa-solid fa-plus mr-1 border border-black rounded rounded-circle p-1"></i>
@@ -157,11 +122,29 @@
         </div> <!-- COL-SM-3 END -->
       </div> <!-- ROW END -->
     </div> <!-- CONTAINER END -->
-
-    <div id="message_box">
-      
+    <form action="/search" method="POST">
+      {% csrf_token %}
+    <div class="modal" tabindex="-1" id="exampleModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Kullanıcı Aratın</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+            {{csrf_token}}
+            <div class="modal-body">
+              <div class="input-group flex-nowrap">
+                <button type="submit" class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass float-end"></i></button>
+                <input type="text" class="form-control" placeholder="Kullanıcı Adı İle Aratın" name="username" aria-describedby="addon-wrapping">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Ara</button>
+            </div>
+        </div>
+      </div>
     </div>
-
+  </form>
 
 
   <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
@@ -209,6 +192,8 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    var search_button = document.querySelector("#search_button")
+
   </script>
   </body>
 </html>

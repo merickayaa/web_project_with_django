@@ -5,13 +5,39 @@ from django.contrib import messages
 from .models import Post, User,LikePost, Follower
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-
+from itertools import chain
+import random
 # Create your views here.
 @login_required(login_url='signin')
 def index(request):
     user_object = User.objects.get(username = request.user.username, id=request.user.id)
     posts = Post.objects.all()
-    return render(request, 'platform.html', {'user_profile':user_object, 'posts':posts})
+
+    user_following_list = []
+    feed = []
+    user_following = Follower.objects.filter(follower = request.user.username)
+
+    for users in user_following:
+        #print(users)
+        user_following_list.append(users.user)
+
+    for usernames in user_following_list:
+        feed_list = Post.objects.filter(user__username=usernames)
+        feed.append(feed_list)
+
+    feed_list = Post.objects.filter(user__username__in=user_following_list)
+
+    # user suggestions start
+    all_users = User.objects.all()
+    user_following_all = [User.objects.get(username=user) for user in user_following]
+    new_suggestions_list = [user for user in all_users if user not in user_following_all]
+    current_user = User.objects.filter(username=request.user.username)
+    final_suggestions_list = [user for user in new_suggestions_list if user not in current_user]
+    random.shuffle(final_suggestions_list)
+    
+    # Kullanıcıları karıştırdıktan sonra, sadece ilk 4 tanesini seçin
+    suggestions_username_profile_list = final_suggestions_list[:4]
+    return render(request, 'platform.html', {'user_profile':user_object, 'posts':feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
 
 @login_required(login_url='signin')
 def upload(request):
@@ -118,10 +144,11 @@ def dashboard(request, user_slug):
     posts = Post.objects.filter(user=profile)
     follower = request.user.username
     user = user_slug
-    followerCount = len(Follower.objects.filter(follower=follower, user=user))
+    followerCount = len(Follower.objects.filter(user=user_slug))
+    #print(followerCount)
     postCount = len(posts)
     followingCount = len(Follower.objects.filter(follower=user_slug))
-    if Follower.objects.filter(follower=follower, user=user):
+    if Follower.objects.filter(follower=follower, user=user).first():
         button_text = 'Takibi Birak'
     else:
         button_text = 'Takip Et'
@@ -139,7 +166,7 @@ def dashboard(request, user_slug):
             
             # Doğru tarih formatını kontrol etmek ve işlemek için datetime kullanın
             try:
-                birthday_date = datetime.strptime(birthday, '%Y-%m-%d').date()
+                birthday_date = datetime.strptime(birthday, '%d-%m-%Y').date()
                 profile.birthday = birthday_date
             except ValueError:
                 messages.info(request, "Geçerli Bir Tarih Giriniz!")
@@ -178,7 +205,7 @@ def dashboard(request, user_slug):
             profile.city = city
             profile.phone_number = phone_number
             profile.save()
-        return redirect('dashboard')
+        return redirect('dashboard', user_slug=profile.slug)
 
     return render(request, 'dashboard.html', {'user_profile':profile, 'posts':posts, 'button_text':button_text,'followerCount':followerCount,'postCount':postCount, 'followingCount':followingCount})
 
@@ -202,3 +229,16 @@ def follow(request):
             return redirect('/dashboard/'+user)
     else:
         return redirect('/')
+
+@login_required(login_url='signin')
+def search(request):
+    user_profile = User.objects.get(username = request.user.username)
+    username_profile_list = []
+    if request.method == 'POST':
+        username = request.POST['username']
+        username_objects = User.objects.filter(username__icontains=username)
+
+        for user in username_objects:
+            username_profile_list.append(user)
+    print(username_profile_list)
+    return render(request, 'search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list})

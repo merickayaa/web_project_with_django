@@ -46,48 +46,47 @@
                     <input type="hidden" value="{{request.user.username}}" name="follower" />
                     <button type="submit" class="rounded-circle p-2">
                       <b class="px-2">{{button_text}}</b>
-                      <i class="fa-solid fa-user-plus float-end py-1"></i>
                     </button>
                   </form>
                   {% endif %}
                 </div>
-                <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                <p class="p-font">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
                 <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
                   <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
                   <span class="li_font p-2" style="font-size: 20px;">
-                    {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                    {{user_profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
                 </button>
               </div>
               <div class="card-body">
                 <h3 class="li_font mb-3">Mesleğiniz</h3>
-                <p class="p-font border-bottom border-black">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                <p class="p-font border-bottom border-black">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
                 <h5 class="li_font">Şirket Adı</h5>
-                <p class="p-font border-bottom border-black">{{ profile.company_name}}<!--Apple--></p>
+                <p class="p-font border-bottom border-black">{{ user_profile.company_name}}<!--Apple--></p>
                 <h5 class="li_font">Çalışma Türü</h5>
-                <p class="p-font border-bottom border-black">{{ profile.type_of_work}}<!--Uzaktan --></p>
+                <p class="p-font border-bottom border-black">{{ user_profile.type_of_work}}<!--Uzaktan --></p>
               </div>
               <div class="card-body">
                 <h3 class="li_font mb-3">Eğitim</h3>
                 <h5 class="li_font">Fakülteniz</h5>
-                <p class="p-font border-bottom border-black">{{profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
+                <p class="p-font border-bottom border-black">{{user_profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
               </div>
               <div class="card-body">
                 <h3 class="li_font mb-3">Konum</h3>
                 <h5 class="li_font">Ülke</h5>
-                <p class="p-font border-bottom border-black">{{profile.country}}<!--Türkiye --></p>
+                <p class="p-font border-bottom border-black">{{user_profile.country}}<!--Türkiye --></p>
                 <h5 class="li_font">Şehir</h5>
-                <p class="p-font border-bottom border-black">{{profile.city}}<!--İstanbul --></p>
+                <p class="p-font border-bottom border-black">{{user_profile.city}}<!--İstanbul --></p>
               </div>
               <div class="card-body">
                 <h3 class="li_font mb-3">İletişim</h3>
                 <h5 class="li_font">Email Adresi</h5>
-                <p><a href="mailto:{{profile.email}}" class="p-font border-bottom border-black">{{profile.email}}</a></p>
+                <p><a href="mailto:{{profile.email}}" class="p-font border-bottom border-black">{{user_profile.email}}</a></p>
                 <h5 class="li_font">Telefon Numarası</h5>
-                <p class="p-font border-bottom border-black">{{profile.phone_number}}<!--05555555555 --></p>
+                <p class="p-font border-bottom border-black">{{user_profile.phone_number}}<!--05555555555 --></p>
               </div>
               <div class="card-body">
                 <h3 class="li_font mb-3">Doğum Günü</h3>
-                <p class="p-font border-bottom border-black">{{profile.birthday}}<!--09.12.2004 --></p>
+                <p class="p-font border-bottom border-black">{{user_profile.birthday}}<!--09.12.2004 --></p>
               </div>
             </div>
           </div> <!--Personal End-->
@@ -238,7 +237,7 @@
                 <h3 class="p-font">Profil Fotoğrafınızı Değiştirin</h3>
                 <hr>
                 <div class="mb-3">
-                  <img class="rounded rounded-circle" src="{{profile.profileimg.url}}" alt="" width="100px">
+                  <img class="rounded rounded-circle" src="{{user_profile.profileimg.url}}" alt="" width="100px">
                   <input type="file" class="form-control card_font w-75" id="image" name="image">
                 </div>
               </div>
@@ -248,17 +247,17 @@
                 <h3 class="p-font">Mesleğiniz</h3>
                 <div class="mb-3">
                   <label class="for li_font">Başlık</label>
-                  <input type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{profile.job}}" name="job">
+                  <input type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{user_profile.job}}" name="job">
                   <div id="titleHelp" class="form-text">Örn: Perakende Satış Müdürü</div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label li_font">Şirket Adı</label>
-                  <input name="company_name" value="{{profile.company_name}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                  <input name="company_name" value="{{user_profile.company_name}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
                   <div id="companyHelp" class="form-text">Örn: Apple</div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label li_font">Çalışma Türü</label>
-                  <select id="workSelect" value="{{profile.type_of_work}}" name="types_work" class="form-select" aria-label="Default select example">
+                  <select id="workSelect" value="{{user_profile.type_of_work}}" name="types_work" class="form-select" aria-label="Default select example">
                     <option name="o1">Lütfen Seçin</option>
                     <option name="o2">Uzaktan</option>
                     <option name="o3">Ofisten</option>
@@ -270,7 +269,7 @@
                 <h3 class="p-font">Eğitim</h3>
                 <div class="mb-3">
                   <label class="form-label li_font">Fakülteniz</label>
-                  <select id="collegeSelect" value="{{profile.college}}" name="college" class="form-select" aria-label="Default select example">
+                  <select id="collegeSelect" value="{{user_profile.college}}" name="college" class="form-select" aria-label="Default select example">
                     <option>Lütfen Seçin</option>
                     <option>Edremit Meslek YüksekOkulu</option>
                     <option>Altınoluk Meslek YüksekOkulu</option>
@@ -283,12 +282,12 @@
                 <h3 class="p-font">Konum</h3>
                 <div class="mb-3">
                   <label class="form-label li_font">Ülke</label>
-                  <input name="country" value="{{profile.country}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                  <input name="country" value="{{user_profile.country}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
                   <div id="locationHelp" class="form-text">Örn: Türkiye</div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label li_font">Şehir</label>
-                  <input name="city" value="{{profile.city}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                  <input name="city" value="{{user_profile.city}}" type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
                   <div id="cityHelp" class="form-text">Örn: İstanbul</div>
                 </div>
               </div>
@@ -296,12 +295,12 @@
                 <h3 class="p-font">İletişim</h3>
                 <div class="mb-3">
                   <label class="form-label li_font">Telefon Numarası</label>
-                  <input name="phone_number" value="{{profile.phone_number}}" type="tel" class="form-control card_font" id="numberInput">
+                  <input name="phone_number" value="{{user_profile.phone_number}}" type="tel" class="form-control card_font" id="numberInput">
                 </div>
                 <div class="mb-3">
                   <label class="form-label li_font">Doğum Günü</label>
                   <div class="d-flex">
-                    <input name="birthday" value="{{profile.birthday}}" type="text" class="form-control" id="birthdayInput" placeholder="DD-MM-YYYY">
+                    <input name="birthday" value="{{user_profile.birthday}}" type="text" class="form-control" id="birthdayInput" placeholder="DD-MM-YYYY">
                   </div>
                 </div>
               </div>
