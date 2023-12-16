@@ -1,0 +1,281 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+    {% block content %}
+
+    <div class="container mt-4">
+      <div class="row">
+    
+        <div class="col-sm-9">
+          <p class="d-inline-flex gap-1">
+            <a class="btn btn-primary" href="{% url 'dashboard' request.user.username %}">
+              Kişisel Bilgiler
+            </a>
+            <a href="{% url 'posts' request.user.username %}" class="btn btn-primary">
+              Paylaşılanlar
+          </a>
+          </p>
+          <div id="Posts">
+            {% for post in posts reversed %}
+            {% if post.image %}
+            <div
+              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+              <div class="input-group m-3 ">
+                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2">
+                <span class="card_font">{{post.user}}</span>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">...</button>
+              </div><!-- CARD-HEADER END -->
+              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+                <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center">
+                <p class="p-font">{{post.caption}}</p>
+              </div> <!-- CARD-BODY END -->
+              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+                <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a
+                    href="/like-post?post_id={{post.id}}"><i class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span
+                      class="card_font">Beğen</span></a></div>
+                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+                </div>
+                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+                <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+                </div>
+              </div>
+              {% if post.no_of_likes == 0 %}
+        
+              {% else %}
+              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
+              {% endif %}
+            </div> <!-- CARD END -->
+            {% else %}
+            <div
+              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+              <div class="input-group m-3">
+                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
+                  class="card_font">{{post.user}}</span>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">...</button>
+              </div><!-- CARD-HEADER END -->
+              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+                <p class="p-font">{{post.caption}}</p>
+              </div> <!-- CARD-BODY END -->
+              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+                <div class="col-sm-2 list-group-item  p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
+                      class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
+                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+                </div>
+                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+                <div class="col-sm-2 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+                </div>
+              </div>
+              {% if post.no_of_likes == 0 %}
+        
+              {% else %}
+              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
+              {% endif %}
+            </div> <!-- CARD END -->
+            {% endif %}
+            {% endfor %}
+          </div> <!--Posts End-->
+        </div> <!-- COL-SM-9 END -->
+
+        <div class="col-sm-3">
+          <div class="card navbar-bg-color text-dark text-start rounded-0">
+            <div class="card-body li_font"><b>Kişiler</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
+            <div class="card-body">
+              <a href="#">
+              <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+              <span class="card_font">Meriç Kaya</span>
+            </a>
+            <a href="#">
+              <i class="fa-solid fa-user-plus float-end"></i>
+            </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+          </div> <!-- CARD END / KISILER --> 
+
+          <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
+            <div class="card-body li_font"><b>Sohbet Grupları</b><button id="myBtn"><i class="fa-solid fa-magnifying-glass float-end"></i></button></div>
+            <div class="card-body pt-0">
+              <a href="#">
+                <i class="fa-solid fa-plus mr-1 border border-black rounded rounded-circle p-1"></i>
+                <span class="card_font">Yeni Grup Kur</span>
+              </a>
+            </div>
+          </div> <!-- CARD END -->
+        </div> <!-- COL-SM-3 END -->
+      </div> <!-- ROW END -->
+    </div> <!-- CONTAINER END -->
+
+    <div id="message_box">
+      
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Post Düzenleme</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div
+                        class="card text-dark text-start row list-group list-group-horizontal justify-content-center text-center border border-black rounded-0">
+                        <div class="input-group m-3">
+                            <img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="m-3 rounded-circle">
+                            <input name="caption" type="text" class="form-control rounded-pill card_font"
+                                placeholder="Postunuzu Düzenleyin" aria-label="text" aria-describedby="basic-addon1">
+                            <input type="file" class="list-group-item form-control" id="inputGroupFile01" name="image_upload"
+                                style="display: none;" onchange="displaySelectedFile()">
+                            <label class="input-group-text rounded-0 border-0 list-group-item" for="inputGroupFile01"
+                                onclick="document.getElementById('inputGroupFile01').click(); event.preventDefault();">
+                                <img src="{% static 'Images/image.png' %}" width="50px" alt="Resim" class="img-thumbnail"
+                                    id="selectedImage">
+                            </label>
+                        </div>
+                        <div class="list-group list-group-item border-0">
+                            <button type="submit" class="btn btn-outline-primary">Yükle</button>
+                        </div>
+                
+                    </div> <!-- CARd END -->
+                </form> 
+            
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+  <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("close")
+    var top_close = document.getElementById("top_close")
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    top_close.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    let liDOM = document.querySelectorAll('li')
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseover', function(){
+        s.classList.add('bg-primary')
+      })
+    })
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseout', function(){
+        s.classList.remove('bg-primary')
+      })
+    })
+    $(document).ready(function () {
+        const collegeSelect = $("#collegeSelect");
+        
+        // Önceki seçim varsa, seçimi ayarla
+        let previousSelection = localStorage.getItem("previousSelection");
+        if (previousSelection !== null) {
+            collegeSelect.val(previousSelection);
+        }
+
+        // Kullanıcı yeni bir seçim yaptığında, seçimi sakla
+        collegeSelect.on('change', function () {
+            localStorage.setItem("previousSelection", collegeSelect.val());
+        });
+    });
+    $(document).ready(function () {
+        const workSelect = $("#workSelect");
+        
+        // Önceki seçim varsa, seçimi ayarla
+        let previousSelectionWORK = localStorage.getItem("previousSelectionWORK");
+        if (previousSelectionWORK !== null) {
+          workSelect.val(previousSelectionWORK);
+        }
+
+        // Kullanıcı yeni bir seçim yaptığında, seçimi sakla
+        workSelect.on('change', function () {
+            localStorage.setItem("previousSelectionWORK", workSelect.val());
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function(){
+      var personal_button = document.querySelector('#Personal_button')
+      var posts_button = document.querySelector('#Posts_button')
+      var personal_col = document.querySelector('#Personal')
+      var posts_col = document.querySelector('#Posts')
+      personal_col.classList.add('show')
+      personal_button.addEventListener('click', function(){
+        if (posts_col.classList.contains('show')){
+          posts_col.classList.remove('show')
+          personal_col.classList.add('show')
+        }else{
+          personal_col.classList.remove('show')
+        }
+      })
+      posts_button.addEventListener('click', function(){
+        if (personal_col.classList.contains('show')){
+          personal_col.classList.remove('show')
+          posts_col.classList.add('show')
+        }else{
+          posts_col.classList.remove('show')
+        }
+      })
+    })
+  </script>
+  </body>
+</html>
+{% endblock %}

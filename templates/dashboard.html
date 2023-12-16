@@ -7,16 +7,14 @@
     
         <div class="col-sm-9">
           <p class="d-inline-flex gap-1">
-            <a class="btn btn-primary" id="Personal_button" data-bs-toggle="collapse" href="#Personal" role="button"
+            <a class="btn btn-primary" id="Personal_button" data-bs-toggle="collapse" href="{% url 'dashboard' request.user.username %}" role="button"
               aria-expanded="false" aria-controls="collapseExample">
               Kişisel Bilgiler
             </a>
-            <button class="btn btn-primary" type="button" id="Posts_button" data-bs-toggle="collapse" data-bs-target="#Posts"
-              aria-expanded="false" aria-controls="collapseExample">
+            <a href="{% url 'posts' request.user.username %}" class="btn btn-primary" id="Posts_button">
               Paylaşılanlar
-            </button>
+          </a>
           </p>
-          <div class="collapse" id="Personal">
             <div class="card navbar-bg-color rounded-0 border-0" style="text-transform: capitalize;">
               <div class="card-header navbar-bg-color p-4">
                 <button id="user"><img src="{{user_profile.profileimg.url}}" width="100px" class="rounded-circle border"
@@ -88,71 +86,7 @@
                 <h3 class="li_font mb-3">Doğum Günü</h3>
                 <p class="p-font border-bottom border-black">{{user_profile.birthday}}<!--09.12.2004 --></p>
               </div>
-            </div>
-          </div> <!--Personal End-->
-          <div class="collapse" id="Posts">
-            {% for post in posts reversed %}
-            {% if post.image %}
-            <div
-              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
-              <div class="input-group m-3">
-                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
-                  class="card_font">{{post.user}}</span>
-              </div><!-- CARD-HEADER END -->
-              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
-                <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center">
-                <p class="p-font">{{post.caption}}</p>
-              </div> <!-- CARD-BODY END -->
-              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
-                <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a
-                    href="/like-post?post_id={{post.id}}"><i class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span
-                      class="card_font">Beğen</span></a></div>
-                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
-                </div>
-                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
-                <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
-                </div>
-              </div>
-              {% if post.no_of_likes == 0 %}
-        
-              {% else %}
-              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
-              {% endif %}
-            </div> <!-- CARD END -->
-            {% else %}
-            <div
-              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
-              <div class="input-group m-3">
-                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
-                  class="card_font">{{post.user}}</span>
-              </div><!-- CARD-HEADER END -->
-              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
-                <p class="p-font">{{post.caption}}</p>
-              </div> <!-- CARD-BODY END -->
-              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
-                <div class="col-sm-2 list-group-item  p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
-                      class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
-                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
-                </div>
-                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
-                <div class="col-sm-2 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
-                </div>
-              </div>
-              {% if post.no_of_likes == 0 %}
-        
-              {% else %}
-              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
-              {% endif %}
-            </div> <!-- CARD END -->
-            {% endif %}
-            {% endfor %}
-          </div> <!--Posts End-->
+            </div> <!--Personal End-->
         </div> <!-- COL-SM-9 END -->
 
         <div class="col-sm-3">

@@ -242,3 +242,14 @@ def search(request):
             username_profile_list.append(user)
     print(username_profile_list)
     return render(request, 'search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list})
+
+
+@login_required(login_url='signin')
+def posts(request,user_slug):
+    profile = User.objects.get(slug=user_slug)
+    posts = Post.objects.filter(user=profile)
+    context = {
+        'posts':posts,
+        'user_profile':profile
+    }
+    return render(request, 'posts.html', context)
