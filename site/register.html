@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kayıt Olun</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <style>
+        .navbar_sets{
+      height: 100px !important;
+    }
+    .logo_color{
+      background-color: #006f68;
+    }
+    .mr-2{
+      margin-right: 20px;
+    }
+    .ml-2{
+      margin-left: 20px;
+    }
+    .ml-1{
+      margin-left: 10px;
+    }
+    .mr-1{
+      margin-right: 10px;
+    }
+    .li_font{
+      font-family: Trebuchet MS,Helvetica,sans-serif;
+    }
+    .p-font{
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .body_backgroundcolor{
+      /* background-color: #121e2d; */
+      background-color: #06619A;
+    }
+    .word_color{
+      /* color: white; */
+      color: rgb(233, 233, 219);
+    }
+    .card_font{
+      font-family: cursive;
+    }
+    a{
+      text-decoration: none;
+      color: rgb(66, 66, 66);
+    }
+    a:hover{
+      color: black;
+    }
+    .navbar-bg-color{
+      background-color: rgb(233, 233, 219);
+    }
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+    .center-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+  <body class="body_backgroundcolor">
+    <div class="center-div">
+      <div class="container ">
+        <div class="row">
+          <div class="col-sm-6 body_backgroundcolor">
+            <h2 class="text-center word_color card_font">Kayıt Formu</h2>
+            <form action="kayit.php" method="post">
+              <div class="form-group m-2 word_color card_font">
+                <label for="ad">Adınız:</label>
+                <input type="text" class="form-control p-font" id="ad" name="ad" required>
+              </div>
+              <div class="form-group m-2 word_color card_font">
+                <label for="soyad">Soyadınız:</label>
+                <input type="text" class="form-control p-font" id="soyad" name="soyad" required>
+              </div>
+              <div class="form-group m-2 word_color card_font">
+                <label for="username">Kullanıcı Adınız:</label>
+                <input type="text" class="form-control p-font" id="soyad" name="username" required>
+              </div>
+              <div class="form-group m-2 word_color card_font">
+                <label for="username">Öğrenci Numaranız:</label>
+                <input type="text" class="form-control p-font" id="soyad" name="userno" required>
+              </div>
+              <div class="form-group m-2 word_color card_font">
+                <label for="email">E-posta Adresiniz:</label>
+                <input type="email" class="form-control p-font" id="email" name="email" required>
+              </div>
+              <div class="form-group m-2 word_color card_font">
+                <label for="sifre">Şifreniz:</label>
+                <input type="password" class="form-control p-font" id="sifre" name="sifre" required>
+              </div>
+              <div class="text-center m-3 word_color li_font">
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+              </div>
+            </form>
+          </div> <!-- COL-SM-6 END -->
+          <div class="col-sm-6 text-center">
+            <a class="li_font" href="#" id="logo"><img width="500px" src="Images/universite logo.png" alt=""></a>
+          </div>
+        </div> <!-- ROW END -->
+      </div> <!-- CONTAINER END -->
+    </div>
+  <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
+

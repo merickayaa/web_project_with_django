@@ -7,14 +7,14 @@
     
         <div class="col-sm-9">
           <p class="d-inline-flex gap-1">
-            <a class="btn btn-primary" id="Personal_button" data-bs-toggle="collapse" href="{% url 'dashboard' request.user.username %}" role="button"
-              aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn btn-primary" id="Personal_button" href="{% url 'dashboard' request.user.username %}">
               Kişisel Bilgiler
             </a>
-            <a href="{% url 'posts' request.user.username %}" class="btn btn-primary" id="Posts_button">
+            <a class="btn btn-primary" id="Posts_button" href="{% url 'posts' request.user.username %}">
               Paylaşılanlar
           </a>
           </p>
+          <div class="collapse" id="Personal">
             <div class="card navbar-bg-color rounded-0 border-0" style="text-transform: capitalize;">
               <div class="card-header navbar-bg-color p-4">
                 <button id="user"><img src="{{user_profile.profileimg.url}}" width="100px" class="rounded-circle border"
@@ -44,15 +44,16 @@
                     <input type="hidden" value="{{request.user.username}}" name="follower" />
                     <button type="submit" class="rounded-circle p-2">
                       <b class="px-2">{{button_text}}</b>
+                      <i class="fa-solid fa-user-plus float-end py-1"></i>
                     </button>
                   </form>
                   {% endif %}
                 </div>
-                <p class="p-font">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
+                <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
                 <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
                   <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
                   <span class="li_font p-2" style="font-size: 20px;">
-                    {{user_profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                    {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
                 </button>
               </div>
               <div class="card-body">
@@ -86,57 +87,23 @@
                 <h3 class="li_font mb-3">Doğum Günü</h3>
                 <p class="p-font border-bottom border-black">{{user_profile.birthday}}<!--09.12.2004 --></p>
               </div>
-            </div> <!--Personal End-->
-        </div> <!-- COL-SM-9 END -->
+            </div>
+          </div> <!--Personal End-->
+        </div>
 
         <div class="col-sm-3">
           <div class="card navbar-bg-color text-dark text-start rounded-0">
-            <div class="card-body li_font"><b>Kişiler</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
-            <div class="card-body">
-              <a href="#">
-              <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-              <span class="card_font">Meriç Kaya</span>
-            </a>
-            <a href="#">
-              <i class="fa-solid fa-user-plus float-end"></i>
-            </a>
+            <div class="card-body li_font"><b>Kişiler</b>
+              <button type="button" class="btn float-end" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
+            {% for suggestion in suggestions_username_profile_list %}
             <div class="card-body">
-              <a href="#">
+              <a href="{% url 'dashboard' suggestion %}">
                 <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
+                <span class="card_font">{{suggestion}}</span>
               </a>
             </div>
-            <div class="card-body">
-              <a href="#">
-                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
-              </a>
-            </div>
-            <div class="card-body">
-              <a href="#">
-                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
-              </a>
-            </div>
-            <div class="card-body">
-              <a href="#">
-                <img width="30px" src="{% static 'Images/user.png' %}" alt="" class="mr-2">
-                <span class="card_font">Meriç Kaya</span>
-              </a>
-              <a href="#">
-                <i class="fa-solid fa-user-plus float-end"></i>
-              </a>
-            </div>
+            {% endfor %}
           </div> <!-- CARD END / KISILER --> 
 
           <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
@@ -171,7 +138,7 @@
                 <h3 class="p-font">Profil Fotoğrafınızı Değiştirin</h3>
                 <hr>
                 <div class="mb-3">
-                  <img class="rounded rounded-circle" src="{{user_profile.profileimg.url}}" alt="" width="100px">
+                  <img class="rounded rounded-circle" src="{{profile.profileimg.url}}" alt="" width="100px">
                   <input type="file" class="form-control card_font w-75" id="image" name="image">
                 </div>
               </div>
@@ -247,6 +214,31 @@
         </div>
       </div>
     </div> <!-- MODAL END -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="/search" method="POST">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="searchModalLabel">Kullanıcı Adı İle Arayın</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group flex-nowrap">
+                <input name="username" type="text" class="form-control" placeholder="Kullanıcı Adı İle Aratın"
+                  aria-describedby="addon-wrapping">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+              <button type="submit" class="btn btn-primary">Ara</button>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
 
   <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

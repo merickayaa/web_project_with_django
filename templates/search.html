@@ -3,51 +3,52 @@
     {% block content %}
     <div class="container mt-4">
       <div class="row">
-        <div class="col-sm-3">
-          <div class="card navbar-bg-color text-dark text-start rounded-0">
-            <div class="card-body"><a href="#"><img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="mr-2 rounded-circle"><span
-                  class="card_font" style="text-transform: capitalize;">{{user.first_name}} {{user.last_name}}</span></a></div>
-            <div class="card-body"><a href="#"><img width="30px" src="{% static 'Images/group.png' %}" alt="" class="mr-2"><span
-                  class="card_font">Arkadaşlar</span></a></div>
-            <div class="card-body"><a href="#"><img width="30px" src="{% static 'Images/group.png' %}" alt="" class="mr-2"><span
-                  class="card_font">Gruplar</span></a></div>
-            <div class="card-body"><a href="#"><img width="30px" src="{% static 'Images/application.png' %}" alt="" class="mr-2"><span
-                  class="card_font">Ayarlar Ve Gizlilik</span></a></div>
-          </div>
-        </div> <!-- COL-SM-3 END -->
-        <div class="col-sm-9 p-4 navbar-bg-color text-dark text-start rounded-0">
-            <div class="row">
-                <div class="col-sm-12 pb-4">
-                    <h2>USERNAME İçin Arama Sonuçları</h2>
-                </div>
-                {% for user in username_profile_list %}
-                <div class="col-sm-2 mb-2">
-                    <a href="{% url 'dashboard' user.username %}"><img src="{{user.profileimg.url}}" width="80px" alt="" class=" p-1 border-2 border-black border-end"></a>
-                </div>
-                <div class="col-sm-10 mb-2">
-                    <a href="{% url 'dashboard' user.username %}"><b style="font-size: larger;">{{user.username}}</b></a>
-                    <p class="m-0" style="font-size: x-small;">{{user.city}}</p>
-                    <p style="font-size: x-small;">{{user.college}}</p>
-                </div>
-                {% endfor %}
-            </div>
-            <!-- <d iv class="card navbar-bg-color text-dark text-start rounded-0">
-                <div class="card-header">
-                    <h2>USERNAME İçin Arama Sonuçları</h2>
-                </div>
-                <div class="card-body">
-                    <div class="card navbar-bg-color text-dark text-start rounded-0">
-                        <div class="card-body">
-                            <img src="{% static 'Images/user.png' %}" width="80px" alt="" class="border-2 border-black border-end"> 
-                            <b>USERNAME</b>
-                        </div>
+        <div class="col-sm-9 navbar-bg-color">
+            {% for users in username_profile_list %}
+            <div class="card mb-3 navbar-bg-color border-0" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="{{users.profileimg.url}}" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body float-end">
+                      <a href="{% url 'dashboard' users.username %}"><h5 class="card-title">{{users.username}}</h5></a>
+                      <span class="card-text"><small class="text-body-secondary">{{users.college}}</small></span><br>
+                      <!-- <p class="card-text">Edremit Meslek YüksekOkulu</p> -->
+                      <span class="card-text"><small class="text-body-secondary">{{users.city}}</small></span>
                     </div>
-                </div> -->
-        </div>
-            
-        
-        </div> <!-- COL-SM-9 END -->
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+        </div> <!-- COL-SM-6 END -->
+      </div> <!-- ROW END -->
+    </div> <!-- CONTAINER END -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="/search" method="POST">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="searchModalLabel">Kullanıcı Adı İle Arayın</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group flex-nowrap">
+                <input name="username" type="text" class="form-control" placeholder="Kullanıcı Adı İle Aratın"
+                  aria-describedby="addon-wrapping">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+              <button type="submit" class="btn btn-primary">Ara</button>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
 
 
   <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
@@ -95,8 +96,6 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-    var search_button = document.querySelector("#search_button")
-
   </script>
   </body>
 </html>

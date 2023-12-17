@@ -1,0 +1,333 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Balıkesir Üniversitesi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <style>
+    .navbar_sets{
+      height: 100px !important;
+    }
+    .logo_color{
+      background-color: #006f68;
+    }
+    .mr-2{
+      margin-right: 20px;
+    }
+    .ml-2{
+      margin-left: 20px;
+    }
+    .ml-1{
+      margin-left: 10px;
+    }
+    .mr-1{
+      margin-right: 10px;
+    }
+    .li_font{
+      font-family: Trebuchet MS,Helvetica,sans-serif;
+    }
+    .card_font{
+      font-family: cursive;
+    }
+    .p-font{
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .body_backgroundcolor{
+      /* background-color: #121e2d; */
+      background-color: #06619A;
+    }
+    .word_color{
+      color: white;
+    }
+    a{
+      text-decoration: none;
+      color: rgb(66, 66, 66);
+    }
+    a:hover{
+      color: black;
+    }
+    .navbar-bg-color{
+      background-color: rgb(233, 233, 219);
+    }
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+  </style>
+  <body class="body_backgroundcolor">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg p-0 navbar-bg-color">
+      <div class="container-fluid navbar_sets">
+        <a class="navbar-brand text-center li_font" href="#" id="logo"><img width="50px" src="Images/universite logo.png" alt=""><br>BALIKESİR ÜNİVERSİTESİ</a>
+        <div class="float-end mr-2" id="navbarNav">
+          <ul class="navbar-nav list-group-horizontal">
+            <li class="nav-item">
+              <a class="nav-link navbar-brand" aria-current="page" href="#"><img width="30px" src="Images/home.png" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">ANASAYFA</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-brand" href="#"><img width="30px" src="Images/megaphone.png" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">BİLDİRİMLER</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-brand" href="#" id="message_button"><img width="30px" src="Images/bubble-chat.png" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">MESAJ KUTUSU</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-brand" href="#"><img width="30px" src="Images/group.png" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">GRUPLAR</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-brand" href="#"><img width="30px" src="Images/user.png" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">Meriç Kaya</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>   <!-- NAVBAR END -->
+
+    <div class="container mt-4">
+      <div class="row">
+    
+        <div class="col-sm-9">
+
+            <div class="card navbar-bg-color rounded-0">
+                <div class="card-header navbar-bg-color p-4">
+                    <img src="Images/user.png" width="100px" class="rounded-circle border" alt="...">
+                    <h3 class="card-title li_font">Meriç Kaya</h3>
+                    <div class="float-end">
+                        <button type="button" class="rounded-circle" id="myBtn">
+                            <i class="fa-solid fa-pen fa-lg py-3 px-2"></i>
+                        </button>
+                    </div>
+                    <p class="p-font">Bilgisayar Programcısı</p>
+                    <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
+                        <img src="Images/universite logo.png" width="50px" alt=""> 
+                        <span class="li_font p-2" style="font-size: 20px;">Edremit Meslek YüksekOkulu</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Mesleğiniz</h3>
+                    <p class="p-font border-bottom border-black">Bilgisayar Programcısı</p>
+                    <h5 class="li_font">Şirket Adı</h5>
+                    <p class="p-font border-bottom border-black">Apple</p>
+                    <h5 class="li_font">Çalışma Türü</h5>
+                    <p class="p-font border-bottom border-black">Uzaktan</p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Eğitim</h3>
+                    <h5 class="li_font">Fakülteniz</h5>
+                    <p class="p-font border-bottom border-black">Edremit Meslek YüksekOkulu</p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Konum</h3>
+                    <h5 class="li_font">Ülke</h5>
+                    <p class="p-font border-bottom border-black">Türkiye</p>
+                    <h5 class="li_font">Şehir</h5>
+                    <p class="p-font border-bottom border-black">İstanbul</p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">İletişim</h3>
+                    <h5 class="li_font">Email Adresi</h5>
+                    <p><a href="mailto:someone@example.com" class="p-font border-bottom border-black">example@hotmail.com</a></p>
+                    <h5 class="li_font">Telefon Numarası</h5>
+                    <p class="p-font border-bottom border-black">05555555555</p>
+                </div>
+                <div class="card-body">
+                    <h3 class="li_font mb-3">Doğum Günü</h3>
+                    <p class="p-font border-bottom border-black">09.12.2004</p>
+                </div>
+            </div>
+        </div> <!-- COL-SM-6 END -->
+
+        <div class="col-sm-3">
+          <div class="card navbar-bg-color text-dark text-start rounded-0">
+            <div class="card-body li_font"><b>Kişiler</b><a href="#"><i class="fa-solid fa-magnifying-glass float-end"></i></a></div>
+            <div class="card-body">
+              <a href="#">
+              <img width="30px" src="Images/user.png" alt="" class="mr-2">
+              <span class="card_font">Meriç Kaya</span>
+            </a>
+            <a href="#">
+              <i class="fa-solid fa-user-plus float-end"></i>
+            </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="Images/user.png" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="Images/user.png" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="Images/user.png" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="#">
+                <img width="30px" src="Images/user.png" alt="" class="mr-2">
+                <span class="card_font">Meriç Kaya</span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-user-plus float-end"></i>
+              </a>
+            </div>
+          </div> <!-- CARD END / KISILER --> 
+
+          <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
+            <div class="card-body li_font"><b>Sohbet Grupları</b><button id="myBtn"><i class="fa-solid fa-magnifying-glass float-end"></i></button></div>
+            <div class="card-body pt-0">
+              <a href="#">
+                <i class="fa-solid fa-plus mr-1 border border-black rounded rounded-circle p-1"></i>
+                <span class="card_font">Yeni Grup Kur</span>
+              </a>
+            </div>
+          </div> <!-- CARD END -->
+        </div> <!-- COL-SM-3 END -->
+      </div> <!-- ROW END -->
+    </div> <!-- CONTAINER END -->
+
+    <div id="message_box">
+      
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" tabindex="-1" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Profili Düzenle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="meslek">
+                        <h3 class="p-font">Mesleğiniz</h3>
+                        <div class="mb-3">
+                            <label class="for li_font">Başlık</label>
+                            <input type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <div id="titleHelp" class="form-text">Örn: Perakende Satış Müdürü</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label li_font">Şirket Adı</label>
+                            <input type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                            <div id="companyHelp" class="form-text">Örn: Apple</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label li_font">Çalışma Türü</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Lütfen Seçin</option>
+                                <option value="1">Uzaktan</option>
+                                <option value="2">Ofisten</option>
+                                <option value="3">Hibrit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="egitim">
+                        <h3 class="p-font">Eğitim</h3>
+                        <div class="mb-3">
+                            <label class="form-label li_font">Fakülteniz</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Lütfen Seçin</option>
+                                <option value="1">Altınoluk Meslek YüksekOkulu</option>
+                                <option value="2">Balıkesir Meslek YüksekOkulu</option>
+                                <option value="3">Edremit Meslek YüksekOkulu</option>
+                            </select>
+                            <div id="SchoolHelp" class="form-text">Örn: Edremit Meslek YüksekOkulu</div>
+                        </div>
+                    </div>
+                    <div id="location">
+                        <h3 class="p-font">Konum</h3>
+                        <div class="mb-3">
+                            <label class="form-label li_font">Ülke</label>
+                            <input type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                            <div id="locationHelp" class="form-text">Örn: Türkiye</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label li_font">Şehir</label>
+                            <input type="text" class="form-control card_font" id="exampleInputEmail1" aria-describedby="companyHelp">
+                            <div id="cityHelp" class="form-text">Örn: İstanbul</div>
+                        </div>
+                    </div>
+                    <div id="iletisim">
+                        <h3 class="p-font">İletişim</h3>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label li_font">Email Adresi</label>
+                            <input type="email" class="form-control card_font" id="floatingInput">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label li_font">Telefon Numarası</label>
+                            <input type="tel" class="form-control card_font" id="numberInput">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label li_font">Doğum Günü</label>
+                            <div class="d-flex">
+                                <input type="number" min="01" max="31" class="form-control" id="dayInput" placeholder="Gün">
+                                <input type="number" min="01" max="12" class="form-control" id="monthInput" placeholder="Ay">
+                                <input type="text" class="form-control" id="yearsInput" placeholder="Yıl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="close" data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary">Değişiklikleri Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div> <!-- MODAL END -->
+
+
+  <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script>
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("close")
+
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    let liDOM = document.querySelectorAll('li')
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseover', function(){
+        s.classList.add('bg-primary')
+      })
+    })
+    liDOM.forEach(function(s){
+      s.addEventListener('mouseout', function(){
+        s.classList.remove('bg-primary')
+      })
+    })
+
+  </script>
+  </body>
+</html>
