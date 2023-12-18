@@ -59,7 +59,6 @@ class User(AbstractUser):
         return super().save(*args, **kwargs)
 
 
-
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
@@ -85,3 +84,5 @@ class Follower(models.Model):
 
     def __str__(self):
         return self.user
+    
+

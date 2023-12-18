@@ -49,8 +49,11 @@
             <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
               <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
                     class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
-              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                    class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+              <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#commentModal">
+                  <i class="fa-regular fa-comment navbar-bg-color mr-1"></i>
+                  <span class="card_font">Yorum Yap</span>
+                </button>
               </div>
               <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
                     class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
@@ -76,8 +79,8 @@
             <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
               <div class="col-sm-2 list-group-item  p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
                     class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
-              <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                    class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
+              <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><button data-bs-toggle="modal" data-bs-target="#commentModal"><i
+                    class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></button>
               </div>
               <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
                     class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
@@ -127,7 +130,7 @@
       
     </div>
 
-    <!-- Modal -->
+    <!-- SearchModal -->
     <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -146,6 +149,30 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
               <button type="submit" class="btn btn-primary">Ara</button>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    <!-- CommentModal -->
+    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="/comment" method="POST">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="commentModalLabel">Yorum Yap</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group flex-nowrap">
+                <input name="comment" type="text" class="form-control" placeholder="Yorumunuzu Yazın">
+                  aria-describedby="addon-wrapping">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+              <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
             </div>
         </div>
         </form>
