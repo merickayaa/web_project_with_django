@@ -48,7 +48,17 @@ def index(request):
         username_profile_list.append(profile_lists)
 
     suggestions_username_profile_list = list(chain(*username_profile_list))
-    return render(request, 'platform.html', {'user_profile':user_object, 'posts':feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
+    comment = []
+    comment_list = []
+    for post in feed_list:
+        comment.append(post.id)
+    
+    for ids in comment:
+        comment_lists = Comment.objects.filter(post__id=ids)
+        comment_list.append(comment_lists)
+
+    comment_post_list = list(chain(*comment_list))
+    return render(request, 'platform.html', {'user_profile':user_object,'comment_post_list':comment_post_list, 'posts':feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
 
 
 @login_required(login_url='signin')
@@ -66,7 +76,7 @@ def comment(request):
         new_comment.save()
 
         # Başarılı bir yanıt gönder
-        return JsonResponse({'status': 'success', 'message': 'Yorumunuz başarıyla eklendi.'})
+        return redirect('/')
 
 
 @login_required(login_url='signin')

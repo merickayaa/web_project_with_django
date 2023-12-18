@@ -61,6 +61,18 @@
                     class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
               </div>
             </div>
+            {% if comment_post_list %}
+            <div class="col-sm-12 card_font px-3 mt-3">
+              <h6>Yorumlar:</h6>
+              {% for comment in comment_post_list %}
+              <div class="d-flex align-items-center mb-2">
+                <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
+                <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}<!--CommentEnd-->
+            
             {% if post.no_of_likes == 0 %}
             
             {% else %}
@@ -88,6 +100,19 @@
                     class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
               </div>
             </div>
+
+            {% if comment_post_list %}
+            <div class="col-sm-12 card_font px-3 mt-3">
+              <h6>Yorumlar:</h6>
+              {% for comment in comment_post_list %}
+              <div class="d-flex align-items-center mb-2">
+                <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
+                <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}<!--CommentEnd-->
+            
             {% if post.no_of_likes == 0 %}
             
             {% else %}
