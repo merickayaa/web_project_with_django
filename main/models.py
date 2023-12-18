@@ -58,6 +58,15 @@ class User(AbstractUser):
             self.slug = slugify(unique_value)
         return super().save(*args, **kwargs)
 
+class Comment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comments',null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    text = models.TextField(default='')
+    created_at = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.text[:20]}"
 
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)

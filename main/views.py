@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import authenticate,login, logout
 from django.contrib import messages
-from .models import Post, User,LikePost, Follower
+from .models import Post, User,LikePost, Follower, Comment
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from itertools import chain
 import random
+
 # Create your views here.
 @login_required(login_url='signin')
 def index(request):
@@ -48,6 +49,24 @@ def index(request):
 
     suggestions_username_profile_list = list(chain(*username_profile_list))
     return render(request, 'platform.html', {'user_profile':user_object, 'posts':feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
+
+
+@login_required(login_url='signin')
+def comment(request):
+    if request.method == 'POST':
+        # POST isteğinden yorum verilerini al
+        comment_text = request.POST.get('comment')
+        post_id = request.POST.get('post_id')
+        # İlgili postu bul
+        post = get_object_or_404(Post, id=post_id)
+        print(post)
+
+        # Yeni bir Comment nesnesi oluştur ve kaydet
+        new_comment = Comment(text=comment_text, post=post, user=request.user)
+        new_comment.save()
+
+        # Başarılı bir yanıt gönder
+        return JsonResponse({'status': 'success', 'message': 'Yorumunuz başarıyla eklendi.'})
 
 
 @login_required(login_url='signin')
