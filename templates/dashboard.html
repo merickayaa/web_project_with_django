@@ -1,7 +1,9 @@
 {% extends 'partials/_base.html' %}
 {% load static %}
     {% block content %}
-
+    {% for message in messages %}
+      <h5>{{message}}</h5>
+    {% endfor %}
     <div class="container mt-4">
       <div class="row">
     

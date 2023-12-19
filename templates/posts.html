@@ -22,7 +22,7 @@
               <div class="input-group m-3 ">
                 <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2">
                 <span class="card_font">{{post.user}}</span>
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">...</button>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal{{ post.id }}">...</button>
               </div><!-- CARD-HEADER END -->
               <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
                 <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center">
@@ -53,7 +53,7 @@
               <div class="input-group m-3">
                 <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
                   class="card_font">{{post.user}}</span>
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">...</button>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal{{ post.id }}">...</button>
               </div><!-- CARD-HEADER END -->
               <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
                 <p class="p-font">{{post.caption}}</p>
@@ -112,42 +112,67 @@
     <div id="message_box">
       
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- settingsModal -->
+    {% for post in posts reversed %}
+    <div class="modal fade" id="settingsModal{{ post.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ post.id }}"
+      aria-hidden="true">
+      <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="editModalLabel">Post Düzenleme</h1>
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="settingsModalLabel{{ post.id }}">Post Ayarları</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div
-                        class="card text-dark text-start row list-group list-group-horizontal justify-content-center text-center border border-black rounded-0">
-                        <div class="input-group m-3">
-                            <img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="m-3 rounded-circle">
-                            <input name="caption" type="text" class="form-control rounded-pill card_font"
-                                placeholder="Postunuzu Düzenleyin" aria-label="text" aria-describedby="basic-addon1">
-                            <input type="file" class="list-group-item form-control" id="inputGroupFile01" name="image_upload"
-                                style="display: none;" onchange="displaySelectedFile()">
-                            <label class="input-group-text rounded-0 border-0 list-group-item" for="inputGroupFile01"
-                                onclick="document.getElementById('inputGroupFile01').click(); event.preventDefault();">
-                                <img src="{% static 'Images/image.png' %}" width="50px" alt="Resim" class="img-thumbnail"
-                                    id="selectedImage">
-                            </label>
-                        </div>
-                    </div> <!-- CARd END -->
-                </form> 
-            
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
+          </div>
+          <div class="modal-body">
+            <form action="/deletepost" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="post_idfordelete" value="{{ post.id }}">
+              <button type="submit" class="btn">Postu Sil</button>
+            </form>
+    
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editModal{{ post.id }}">Postu Düzenle</button>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
+    {% endfor %}
+    {% for post in posts reversed %}
+    <!-- PostEditModal -->
+    <div class="modal fade" id="editModal{{ post.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ post.id }}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="editModalLabel{{ post.id }}">Post Düzenle</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/editpost" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div
+                  class="card text-dark text-start row list-group list-group-horizontal justify-content-center text-center border border-black rounded-0">
+                  <div class="input-group m-3">
+                      <img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="m-3 rounded-circle">
+                      <input type="hidden" name="post_idforedit" value="{{ post.id }}">
+                      <input name="caption" type="text" class="form-control rounded-pill card_font"
+                          placeholder="Postunuzu Düzenleyin" aria-label="text" aria-describedby="basic-addon1">
+                      <input type="file" class="list-group-item form-control" id="inputGroupFile01" name="image_upload"
+                          style="display: none;" onchange="displaySelectedFile()">
+                      <label class="input-group-text rounded-0 border-0 list-group-item" for="inputGroupFile01"
+                          onclick="document.getElementById('inputGroupFile01').click(); event.preventDefault();">
+                          <img src="{% static 'Images/image.png' %}" width="50px" alt="Resim" class="img-thumbnail"
+                              id="selectedImage">
+                      </label>
+                  </div>
+              </div> <!-- CARd END -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+              </div>
+            </form> 
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
     <!-- Modal -->
     <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
       <div class="modal-dialog">

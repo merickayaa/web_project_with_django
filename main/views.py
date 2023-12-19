@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect,get_object_or_404,reverse
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import authenticate,login, logout
 from django.contrib import messages
@@ -368,3 +368,37 @@ def follow(request):
             return redirect('/dashboard/'+user)
     else:
         return redirect('/')
+
+
+@login_required(login_url='signin')
+def deletepost(request):
+    
+    if request.method == 'POST':
+        post_id = request.POST['post_idfordelete']
+        post = get_object_or_404(Post, id=post_id, user=request.user)
+        try:
+            # Gönderiyi sil
+            post.delete()
+            messages.success(request, 'Gönderi başarıyla silindi.')
+        except Exception as e:
+            # Silme sırasında hata oluştuysa kullanıcıya bildir
+            messages.error(request, f'Gönderi silinirken bir hata oluştu: {str(e)}')
+    return redirect(reverse('dashboard', args=[request.user.username]))
+        
+
+
+def editpost(request):
+    if request.method == 'POST':
+        post_id = request.POST['post_idforedit']
+        post = get_object_or_404(Post, id=post_id, user=request.user)
+        post.caption = request.POST['caption']
+        post.image = request.FILES.get('image_upload')
+        try:
+            # Gönderiyi sil
+            post.save()
+            messages.success(request, 'Gönderi başarıyla düzenlendi.')
+        except Exception as e:
+            # Silme sırasında hata oluştuysa kullanıcıya bildir
+            messages.error(request, f'Gönderi düzenlenirken bir hata oluştu: {str(e)}')
+
+    return redirect(reverse('dashboard', args=[request.user.username]))
