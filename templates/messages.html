@@ -35,128 +35,42 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+
                 </div>
             </div> <!-- COL-SM-3 END -->
             <div class="col-sm-8 center-div">
                 <div class="image-container">
                     <img src="Images/bubble-chat.png" width="200px" class="" alt="">
                 </div>
-                    <button type="button" id="New-Message" class="p-font border-0 btn btn-info" style="font-size: 30px;">YENİ MESAJ GÖNDER</button>
+                    <button type="button" id="New-Message" class="p-font border-0 btn btn-info" style="font-size: 30px;" data-bs-toggle="modal" data-bs-target="#NewMessageModal">YENİ MESAJ GÖNDER</button>
             </div> <!-- COL-SM-8 END -->
         </div> <!-- ROW END -->
     </div> <!-- CONTAINER END -->
+
+        <!-- NewMessageModal -->
+        <div class="modal fade" id="NewMessageModal" tabindex="-1" aria-labelledby="NewMessageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form action="/search" method="POST">
+                  {% csrf_token %}
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="NewMessageModalLabel">Kullanıcı Adı İle Arayın</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="input-group flex-nowrap">
+                      <input name="username" type="text" class="form-control" placeholder="Kullanıcı Adı İle Aratın"
+                        aria-describedby="addon-wrapping">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
+                  </div>
+              </div>
+              </form>
+            </div>
+          </div>
 
 
   <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
