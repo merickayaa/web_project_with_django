@@ -7,7 +7,7 @@ class Thread(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
 
-class Messages(models.Model):
+class Message(models.Model):
     theread = models.ForeignKey('Thread', related_name='+',on_delete=models.CASCADE,blank=True,null=True)
     sender_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
     receiver_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
