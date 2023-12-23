@@ -1,44 +1,37 @@
 {% extends 'partials/_base.html' %}
 {% load static %}
     {% block content %}
+    {% load crispy_forms_tags %}
 
     <div class="container px-5 py-3">
         <div class="row">
             <div class="col-sm-4 navbar-bg-color">
                 <h3 class="li_font pt-3 px-4">Mesajlar</h3>
                 <div class="card navbar-bg-color border-0">
-                    <a href="#">
+                  {% for thread in threads.all %}
+                  <!-- <div class="row">
+                    <div class="card col-sm-10 p-5 shadow-sm">
+                      <img width="30px" src="{{thread.receiver.profileimg.url}}" alt="" class="mr-2">
+                      <h5>{{ thread.receiver }}</h5>
+                      <a class="stretched-link" href="{% url 'thread' thread.pk %}"></a>
+                    </div>
+                  </div> -->
+                    <a href="{% url 'thread' thread.pk %}" class="border-bottom border-black">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
+                                        <img width="30px" src="{{thread.receiver.profileimg.url}}" alt="" class="mr-2">
                                 </div>
                                 <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
+                                    <span class="card_font" style="font-size: 20px;">{{thread.receiver}}</span>
                                 </div>
                             </div>
                         </div>
                     </a>
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="Images/user.png" alt="" class="mr-2">
-                                </div>
-                                <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">Meric Kaya</span>
-                                    <br>
-                                    <span class="text-secondary">Son Mesaj</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
+                    {% endfor %}
                 </div>
-            </div> <!-- COL-SM-3 END -->
-            <div class="col-sm-8 center-div">
+            </div> <!-- COL-SM-4 END -->
+            <div class="mt-5" style="text-align: center;">
                 <div class="image-container">
                     <img src="Images/bubble-chat.png" width="200px" class="" alt="">
                 </div>
@@ -49,9 +42,10 @@
 
         <!-- NewMessageModal -->
         <div class="modal fade" id="NewMessageModal" tabindex="-1" aria-labelledby="NewMessageModalLabel" aria-hidden="true">
+          <form method="POST">
             <div class="modal-dialog">
               <div class="modal-content">
-                <form action="/new_message" method="POST">
+                
                   {% csrf_token %}
                   <div class="modal-header">
                     <h1 class="modal-title fs-5" id="NewMessageModalLabel">Kullanıcı Adı İle Arayın</h1>
@@ -59,8 +53,7 @@
                   </div>
                   <div class="modal-body">
                     <div class="input-group flex-nowrap">
-                      <input name="username" type="text" class="form-control" placeholder="Kullanıcı Adı İle Aratın"
-                        aria-describedby="addon-wrapping">
+                      {{form}}
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -68,9 +61,9 @@
                     <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
                   </div>
               </div>
-              </form>
             </div>
-          </div>
+          </form>
+        </div>
 
 
   <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>

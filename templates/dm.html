@@ -17,22 +17,54 @@
         </div> <!-- COL-SM-3 END -->
         <div class="col-sm-9 ">
             <div class="card navbar-bg-color text-dark text-start rounded-0">
-                <h2 class="border-1 card-header"><b>Meric Kaya</b></h2>
+              {% if thread.receiver == request.user %}
+                <h2 class="border-1 card-header"><b>{{thread.user}}</b></h2>
+              {% else %}
+                <h2 class="border-1 card-header"><b>{{thread.receiver}}</b></h2>
+              {% endif %}
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12 p-1"><b>Meric Kaya</b></div>
-                        <div class="col-sm-12 p-1 border-bottom border-black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, mollitia.</div>
-                        <div class="col-sm-12 p-1 text-end"><b>S S</b></div>
-                        <div class="col-sm-12 p-1 border-bottom border-black text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, mollitia.</div>
-                        <div class="col-sm-12 p-1"><b>Meric Kaya</b></div>
-                        <div class="col-sm-12 p-1 border-bottom border-black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, mollitia.</div>
-                        <div class="col-sm-12 p-1 text-end"><b>S S</b></div>
-                        <div class="col-sm-12 p-1 border-bottom border-black text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, mollitia.</div>
+                  {% if message_list.all.count == 0 %}
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <h2>Mesaj Yok</h2>
                     </div>
+                  </div>
+                  {% endif %}
+                  {% for message in message_list %}
+                    <div class="row">
+                      {% if message.sender_user == request.user %}
+                      <div class="col-sm-12 p-1 mb-1 mt-1">
+                        <div class="border border-black rounded w-25 bg-info p-2">
+                          <b class="border-bottom border-black">{{message.sender_user}}</b>
+                          <p>{{message.body}}</p>
+                        </div>
+                      </div>
+                      <!-- <div class="col-sm-12 p-1 border-bottom border-black bg-info">{{message.body}}</div> -->
+                      {% elif message.receiver_user == request.user %}
+                      <div class="col-sm-12 p-1 mb-1 mt-1" >
+                        <div style="float: right !important;" class="p-2 w-25 border border-black rounded text-end">
+                          <b class="border-bottom border-black">{{ message.sender_user }}</b>
+                          <p>{{message.body}}</p>
+                        </div>
+                      </div>
+                      <!-- <div class="col-sm-12 p-1 border-bottom border-black text-end">{{message.body}}</div> -->
+                      {% endif %}
+                    </div>
+                      {% endfor %}
+                        
+                        
+                        <!-- <div class="col-sm-12 p-1"><b>Meric Kaya</b></div>
+                        <div class="col-sm-12 p-1 border-bottom border-black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, mollitia.</div>
+                        <div class="col-sm-12 p-1 text-end"><b>S S</b></div>
+                        <div class="col-sm-12 p-1 border-bottom border-black text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, mollitia.</div> -->
+
                 </div>
                 <div class="card-footer input-group">
-                    <input name="message" type="text" class="form-control navbar-bg-color border border-2 border-black" placeholder="Mesajinizi Yaziniz">
-                    <button type="submit" class="btn btn-primary card_font">Gönder</button>
+                  <form action="{% url 'create-message' thread.pk %}" method="POST" enctype="multipart/form-data" style="width: 100%;">
+                    {% csrf_token %}
+                    {{form}}
+                    <button type="submit" class="btn btn-primary card_font mt-1 float-end">Gönder</button>
+                  </form>
                 </div>
             </div>
         </div> <!-- COL-SM-9 END -->

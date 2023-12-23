@@ -8,7 +8,7 @@ class Thread(models.Model):
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
 
 class Message(models.Model):
-    theread = models.ForeignKey('Thread', related_name='+',on_delete=models.CASCADE,blank=True,null=True)
+    thread = models.ForeignKey('Thread', related_name='+',on_delete=models.CASCADE,blank=True,null=True)
     sender_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
     receiver_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
     body = models.CharField(max_length=100)
