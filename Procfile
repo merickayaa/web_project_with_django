@@ -1,1 +1,1 @@
-web: gunicorn projectname.wsgi --log-file -
+web: gunicorn baun_media.wsgi --log-file -
