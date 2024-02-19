@@ -158,7 +158,10 @@ def signup(request):
                     try:
                         # Django'nun sağladığı validate_password fonksiyonunu kullanarak şifreyi doğrula
                         validate_password(password, user=User)
-
+                    except Exception as e:
+                        messages.info(request, f"Şifre güvenliği gereksinimlerini sağlamıyor")
+                        return redirect('signup')
+                    try:
                         if User.objects.filter(email=email).exists():
                             messages.info(request, "Email Zaten Kullanılıyor!")
                             return redirect('signup')
@@ -173,8 +176,10 @@ def signup(request):
                             login(request, user_login)
                             return redirect('signin')
                     except Exception as e:
-                        messages.info(request, f"Şifre güvenliği gereksinimlerini sağlamıyor")
+                        messages.info(request,e)
                         return redirect('signup')
+
+                    
                 else:
                     messages.info(request, "Şifre Eşleşmiyor!")
                     return redirect('signup')
