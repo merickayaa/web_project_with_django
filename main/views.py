@@ -7,6 +7,11 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from itertools import chain
 import random
+from django.db import transaction
+from chat.models import Message,Thread
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.password_validation import validate_password
+
 
 # Create your views here.
 @login_required(login_url='signin')
@@ -16,7 +21,7 @@ def index(request):
     user_following_list = []
     feed = []
     user_following = Follower.objects.filter(follower=request.user.username)
-
+    user_follower = Follower.objects.filter(user=request.user.username)
     for users in user_following:
         user_following_list.append(users.user)
 
@@ -32,7 +37,7 @@ def index(request):
     # Assuming 'follower' is the correct attribute in your Follower model
     user_following_all = [User.objects.get(username=user.user) for user in user_following]
 
-    new_suggestions_list = [user for user in all_users if user not in user_following_all]
+    new_suggestions_list = [user for user in all_users if user not in user_following_all and not user.is_staff]
     current_user = User.objects.get(username=request.user.username)  # Use get instead of filter
     final_suggestions_list = [user for user in new_suggestions_list if user != current_user]
 
@@ -58,7 +63,7 @@ def index(request):
         comment_list.append(comment_lists)
 
     comment_post_list = list(chain(*comment_list))
-    return render(request, 'platform.html', {'user_profile':user_object,'comment_post_list':comment_post_list, 'posts':feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
+    return render(request, 'platform.html', {'user_following':user_following,'user_profile':user_object,'comment_post_list':comment_post_list, 'posts':feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
 
 
 @login_required(login_url='signin')
@@ -84,7 +89,8 @@ def search(request):
     user_object = User.objects.get(username = request.user.username)
     if request.method == 'POST':
         username = request.POST['username']
-        username_object = User.objects.filter(username__icontains=username)
+        all_users = User.objects.filter(is_staff=False)
+        username_object = all_users.filter(username__icontains=username)
         username_profile = []
         username_profile_list = []
 
@@ -149,19 +155,26 @@ def signup(request):
             print(num_str)
             if num_str == "114" or num_str == "214":
                 if password == password2:
-                    if User.objects.filter(email=email).exists():
-                        messages.info(request, "Email Zaten Kullanılıyor!")
-                        return redirect('signup')
-                    elif User.objects.filter(username=username).exists():
-                        messages.info(request, "Kullanıcı Adı Zaten Kullanılıyor!")
-                        return redirect('signup')
-                    else:
-                        user = User.objects.create_user(first_name=firstname,last_name=lastname,username=username, student_no=userno, email=email, password=password, slug=slug)
-                        user.save()
+                    try:
+                        # Django'nun sağladığı validate_password fonksiyonunu kullanarak şifreyi doğrula
+                        validate_password(password, user=User)
 
-                        user_login = authenticate(username=username,password=password)
-                        login(request, user_login)
-                        return redirect('signin')
+                        if User.objects.filter(email=email).exists():
+                            messages.info(request, "Email Zaten Kullanılıyor!")
+                            return redirect('signup')
+                        elif User.objects.filter(username=username).exists():
+                            messages.info(request, "Kullanıcı Adı Zaten Kullanılıyor!")
+                            return redirect('signup')
+                        else:
+                            user = User.objects.create_user(first_name=firstname, last_name=lastname, username=username, student_no=userno, email=email, password=password, slug=slug)
+                            user.save()
+
+                            user_login = authenticate(username=username, password=password)
+                            login(request, user_login)
+                            return redirect('signin')
+                    except Exception as e:
+                        messages.info(request, f"Şifre güvenliği gereksinimlerini sağlamıyor")
+                        return redirect('signup')
                 else:
                     messages.info(request, "Şifre Eşleşmiyor!")
                     return redirect('signup')
@@ -283,7 +296,7 @@ def dashboard(request, user_slug):
     # Assuming 'follower' is the correct attribute in your Follower model
     user_following_all = [User.objects.get(username=user.user) for user in user_following]
 
-    new_suggestions_list = [user for user in all_users if user not in user_following_all]
+    new_suggestions_list = [user for user in all_users if user not in user_following_all and not user.is_staff]
     current_user = User.objects.get(username=request.user.username)  # Use get instead of filter
     final_suggestions_list = [user for user in new_suggestions_list if user != current_user]
 
@@ -325,7 +338,7 @@ def posts(request,user_slug):
     # Assuming 'follower' is the correct attribute in your Follower model
     user_following_all = [User.objects.get(username=user.user) for user in user_following]
 
-    new_suggestions_list = [user for user in all_users if user not in user_following_all]
+    new_suggestions_list = [user for user in all_users if user not in user_following_all and not user.is_staff]
     current_user = User.objects.get(username=request.user.username)  # Use get instead of filter
     final_suggestions_list = [user for user in new_suggestions_list if user != current_user]
 
@@ -341,10 +354,21 @@ def posts(request,user_slug):
         username_profile_list.append(profile_lists)
 
     suggestions_username_profile_list = list(chain(*username_profile_list))
+    comment = []
+    comment_list = []
+    for post in feed_list:
+        comment.append(post.id)
+    
+    for ids in comment:
+        comment_lists = Comment.objects.filter(post__id=ids)
+        comment_list.append(comment_lists)
+
+    comment_post_list = list(chain(*comment_list))
     context = {
         'user_profile':profile,
         'posts':posts,
-        'suggestions_username_profile_list':suggestions_username_profile_list
+        'suggestions_username_profile_list':suggestions_username_profile_list,
+        'comment_post_list':comment_post_list
     }
     return render(request,'posts.html', context)
 
@@ -384,9 +408,35 @@ def deletepost(request):
             # Silme sırasında hata oluştuysa kullanıcıya bildir
             messages.error(request, f'Gönderi silinirken bir hata oluştu: {str(e)}')
     return redirect(reverse('dashboard', args=[request.user.username]))
-        
 
 
+
+# @login_required(login_url='signin')
+# def deleteAccount(request):
+#     if request.method == 'POST':
+#         user = get_object_or_404(User, username=request.user.username)
+#         try:
+#             with transaction.atomic():
+#                 # Delete related objects in the correct order to avoid foreign key constraints
+#                 Comment.objects.filter(user=user).delete()
+#                 LikePost.objects.filter(username=user.username).delete()
+#                 Post.objects.filter(user=user).delete()
+
+#                 # Delete user's followers and following relationships
+#                 Follower.objects.filter(user=user).delete()
+#                 Follower.objects.filter(follower=user).delete()
+
+#                 # Now you can safely delete the user
+#                 user.delete()
+
+#                 messages.success(request, 'Hesabınız başarıyla silindi.')
+#                 return redirect('signup')
+#         except Exception as e:
+#             messages.error(request, f'Hesap silinirken bir hata oluştu: {str(e)}')
+
+#     return redirect('index')
+
+@login_required(login_url='signin')
 def editpost(request):
     if request.method == 'POST':
         post_id = request.POST['post_idforedit']
@@ -402,3 +452,50 @@ def editpost(request):
             messages.error(request, f'Gönderi düzenlenirken bir hata oluştu: {str(e)}')
 
     return redirect(reverse('dashboard', args=[request.user.username]))
+
+
+@login_required(login_url='signin')
+def editaccount(request):
+    if request.method == 'POST':
+        user = User.objects.get(username=request.user.username)
+        user.username = request.POST['username']
+        user.email = request.POST['email']
+        user.slug = user.username
+        if user.username and user.email:
+            user.save()
+            messages.success(request, 'User başarıyla düzenlendi.')
+            return redirect(reverse('dashboard', args=[user.username]))
+        else:
+            messages.error(request, 'Iki Formuda Doldurunuz.')
+            return redirect('index')
+
+
+@login_required(login_url='signin')
+def editpassword(request):
+    if request.method == 'POST':
+        user = User.objects.get(username=request.user.username)
+        old_password = request.POST['old_password']
+
+        # Kontrol etmek için check_password fonksiyonunu kullanın
+        if user.check_password(old_password):
+            new_password = request.POST['password']
+            confirm_password = request.POST['password2']
+
+            if new_password == confirm_password:
+                # Kullanıcının şifresini güncelleyin
+                user.set_password(new_password)
+                user.save()
+
+                # Kullanıcının oturumunu güncelleyin
+                update_session_auth_hash(request, user)
+
+                messages.success(request, 'Şifre başarıyla güncellendi.')
+                return redirect('signin')
+            else:
+                messages.error(request, 'Şifreleriniz aynı değil.')
+        else:
+            messages.error(request, 'Eski şifreniz girdiğiniz şifre ile uyuşmamaktadır.')
+
+    return redirect('index')
+
+        

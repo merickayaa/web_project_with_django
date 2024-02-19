@@ -9,14 +9,14 @@
     
         <div class="col-sm-9">
           <p class="d-inline-flex gap-1">
-            <a class="btn btn-primary" id="Personal_button" href="{% url 'dashboard' request.user.username %}">
+            <a class="btn btn-primary" id="Personal_button" href="{% url 'dashboard' user_profile.username %}">
               Kişisel Bilgiler
             </a>
-            <a class="btn btn-primary" id="Posts_button" href="{% url 'posts' request.user.username %}">
+            <a class="btn btn-primary" id="Posts_button" href="{% url 'posts' user_profile.username %}">
               Paylaşılanlar
           </a>
           </p>
-          <div class="collapse" id="Personal">
+          <div id="Personal">
             <div class="card navbar-bg-color rounded-0 border-0" style="text-transform: capitalize;">
               <div class="card-header navbar-bg-color p-4">
                 <button id="user"><img src="{{user_profile.profileimg.url}}" width="100px" class="rounded-circle border"
@@ -51,13 +51,32 @@
                   </form>
                   {% endif %}
                 </div>
-                <p class="p-font">{{ profile.job}}<!--Bilgisayar Programcısı --></p>
+                {% if user_profile.job and user_profile.college %}
+                <p class="p-font">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
                 <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
                   <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
                   <span class="li_font p-2" style="font-size: 20px;">
-                    {{profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                    {{user_profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
                 </button>
+                {% elif user_profile.job %}
+                <p class="p-font">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
+                <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
+                  <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
+                </button>
+                {% elif user_profile.college %}
+                <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
+                  <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
+                  <span class="li_font p-2" style="font-size: 20px;">
+                    {{user_profile.college}}<!--Edremit Meslek YüksekOkulu --></span>
+                </button>
+                {% else %}
+                <p class="p-font"><!--Bilgisayar Programcısı --></p>
+                <button class="float-end p-2 mt-3 btn navbar-bg-color d-flex align-items-center" type="button">
+                  <img src="{% static 'Images/universite_logo.png' %}" width="50px" alt="">
+                </button>
+                {% endif %}
               </div>
+              {% if user_profile.job and user_profile.company_name and user_profile.type_of_work %}
               <div class="card-body">
                 <h3 class="li_font mb-3">Mesleğiniz</h3>
                 <p class="p-font border-bottom border-black">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
@@ -66,11 +85,30 @@
                 <h5 class="li_font">Çalışma Türü</h5>
                 <p class="p-font border-bottom border-black">{{ user_profile.type_of_work}}<!--Uzaktan --></p>
               </div>
+              {% elif user_profile.job %}
+              <div class="card-body">
+                <h3 class="li_font mb-3">Mesleğiniz</h3>
+                <p class="p-font border-bottom border-black">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
+              </div>
+              {% elif user_profile.job and user_profile.company_name %}
+              <div class="card-body">
+                <h3 class="li_font mb-3">Mesleğiniz</h3>
+                <p class="p-font border-bottom border-black">{{ user_profile.job}}<!--Bilgisayar Programcısı --></p>
+                <h5 class="li_font">Şirket Adı</h5>
+                <p class="p-font border-bottom border-black">{{ user_profile.company_name}}<!--Apple--></p>
+              </div>
+              {% elif user_profile.type_of_work and user_profile.company_name %}
+              {% else %}
+              {% endif %}
+              {% if user_profile.college %}
               <div class="card-body">
                 <h3 class="li_font mb-3">Eğitim</h3>
                 <h5 class="li_font">Fakülteniz</h5>
                 <p class="p-font border-bottom border-black">{{user_profile.college}}<!--Edremit Meslek YüksekOkulu --></p>
               </div>
+              {% else %}
+              {% endif %}
+              {% if user_profile.country and user_profile.city %}
               <div class="card-body">
                 <h3 class="li_font mb-3">Konum</h3>
                 <h5 class="li_font">Ülke</h5>
@@ -78,6 +116,21 @@
                 <h5 class="li_font">Şehir</h5>
                 <p class="p-font border-bottom border-black">{{user_profile.city}}<!--İstanbul --></p>
               </div>
+              {% elif user_profile.country %}
+              <div class="card-body">
+                <h3 class="li_font mb-3">Konum</h3>
+                <h5 class="li_font">Ülke</h5>
+                <p class="p-font border-bottom border-black">{{user_profile.country}}<!--Türkiye --></p>
+              </div>
+              {% elif user_profile.city %}
+              <div class="card-body">
+                <h3 class="li_font mb-3">Konum</h3>
+                <h5 class="li_font">Şehir</h5>
+                <p class="p-font border-bottom border-black">{{user_profile.city}}<!--İstanbul --></p>
+              </div>
+              {% else %}
+              {% endif %}
+              {% if user_profile.email and user_profile.phone_number %}
               <div class="card-body">
                 <h3 class="li_font mb-3">İletişim</h3>
                 <h5 class="li_font">Email Adresi</h5>
@@ -85,10 +138,27 @@
                 <h5 class="li_font">Telefon Numarası</h5>
                 <p class="p-font border-bottom border-black">{{user_profile.phone_number}}<!--05555555555 --></p>
               </div>
+              {% elif user_profile.email %}
+              <div class="card-body">
+                <h3 class="li_font mb-3">İletişim</h3>
+                <h5 class="li_font">Email Adresi</h5>
+                <p><a href="mailto:{{profile.email}}" class="p-font border-bottom border-black">{{user_profile.email}}</a></p>
+              </div>
+              {% elif user_profile.phone_number %}
+              <div class="card-body">
+                <h3 class="li_font mb-3">İletişim</h3>
+                <h5 class="li_font">Telefon Numarası</h5>
+                <p class="p-font border-bottom border-black">{{user_profile.phone_number}}<!--05555555555 --></p>
+              </div>
+              {% else %}
+              {% endif %}
+              {% if user_profile.birthday %}
               <div class="card-body">
                 <h3 class="li_font mb-3">Doğum Günü</h3>
                 <p class="p-font border-bottom border-black">{{user_profile.birthday}}<!--09.12.2004 --></p>
               </div>
+              {% else %}
+              {% endif %}
             </div>
           </div> <!--Personal End-->
         </div>
@@ -107,16 +177,6 @@
             </div>
             {% endfor %}
           </div> <!-- CARD END / KISILER --> 
-
-          <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
-            <div class="card-body li_font"><b>Sohbet Grupları</b><button id="myBtn"><i class="fa-solid fa-magnifying-glass float-end"></i></button></div>
-            <div class="card-body pt-0">
-              <a href="#">
-                <i class="fa-solid fa-plus mr-1 border border-black rounded rounded-circle p-1"></i>
-                <span class="card_font">Yeni Grup Kur</span>
-              </a>
-            </div>
-          </div> <!-- CARD END -->
         </div> <!-- COL-SM-3 END -->
       </div> <!-- ROW END -->
     </div> <!-- CONTAINER END -->
@@ -203,7 +263,7 @@
                 <div class="mb-3">
                   <label class="form-label li_font">Doğum Günü</label>
                   <div class="d-flex">
-                    <input name="birthday" value="{{user_profile.birthday}}" type="text" class="form-control" id="birthdayInput" placeholder="DD-MM-YYYY">
+                    <input name="birthday" value="{{user_profile.birthday}}" type="text" class="form-control" id="birthdayInput" placeholder="YYYY-MM-DD">
                   </div>
                 </div>
               </div>

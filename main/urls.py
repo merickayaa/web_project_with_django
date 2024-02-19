@@ -15,5 +15,9 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('signin', views.signin, name='signin'),
     path('logout', views.Logout, name='logout'),
+    # path('deleteaccount', views.deleteAccount, name='deleteaccount'),
+    path('editaccount', views.editaccount, name='editaccount'),
+    path('editpassword', views.editpassword, name='editpassword'),
+
 ]
 

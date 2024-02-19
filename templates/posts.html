@@ -7,76 +7,112 @@
     
         <div class="col-sm-9">
           <p class="d-inline-flex gap-1">
-            <a class="btn btn-primary" href="{% url 'dashboard' request.user.username %}">
+            <a class="btn btn-primary" href="{% url 'dashboard' user_profile.username %}">
               Kişisel Bilgiler
             </a>
-            <a href="{% url 'posts' request.user.username %}" class="btn btn-primary">
+            <a href="{% url 'posts' user_profile.username %}" class="btn btn-primary">
               Paylaşılanlar
           </a>
           </p>
           <div id="Posts">
-            {% for post in posts reversed %}
-            {% if post.image %}
-            <div
-              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
-              <div class="input-group m-3 ">
-                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2">
-                <span class="card_font">{{post.user}}</span>
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal{{ post.id }}">...</button>
-              </div><!-- CARD-HEADER END -->
-              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
-                <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center">
-                <p class="p-font">{{post.caption}}</p>
+            {% if not posts %}
+              <div class="border-0 navbar-bg-color px-5">
+                <p class="p-font">Post Bulunmamaktadir.</p>
               </div> <!-- CARD-BODY END -->
-              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
-                <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color"><a
-                    href="/like-post?post_id={{post.id}}"><i class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span
-                      class="card_font">Beğen</span></a></div>
-                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
-                </div>
-                <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
-                <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
-                </div>
-              </div>
-              {% if post.no_of_likes == 0 %}
-        
-              {% else %}
-              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
-              {% endif %}
-            </div> <!-- CARD END -->
-            {% else %}
-            <div
-              class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
-              <div class="input-group m-3">
-                <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
-                  class="card_font">{{post.user}}</span>
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal{{ post.id }}">...</button>
-              </div><!-- CARD-HEADER END -->
-              <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
-                <p class="p-font">{{post.caption}}</p>
-              </div> <!-- CARD-BODY END -->
-              <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
-                <div class="col-sm-2 list-group-item  p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
-                      class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
-                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-comment navbar-bg-color mr-1"></i><span class="card_font">Yorum Yap</span></a>
-                </div>
-                <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
-                <div class="col-sm-2 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
-                      class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
-                </div>
-              </div>
-              {% if post.no_of_likes == 0 %}
-        
-              {% else %}
-              <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
-              {% endif %}
-            </div> <!-- CARD END -->
             {% endif %}
+            {% for post in posts reversed %}
+              {% if post.image %}
+              <div
+                class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+                <div class="input-group m-3 ">
+                  <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2">
+                  <span class="card_font">{{post.user}}</span>
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal{{ post.id }}">...</button>
+                </div><!-- CARD-HEADER END -->
+                <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+                  <img src="{{post.image.url}}" alt="" class="border border-1 border-black mb-3 center" >
+                  <p class="p-font">{{post.caption}}</p>
+                </div> <!-- CARD-BODY END -->
+                <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+                  <div class="col-sm-2 list-group-item m-2 pb-3 p-0 border-0 navbar-bg-color">
+                    <a href="/like-post?post_id={{post.id}}">
+                      <i class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i>
+                      <span class="card_font">Beğen</span>
+                    </a>
+                  </div>
+                  <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#commentModal{{ post.id }}">
+                      <i class="fa-regular fa-comment navbar-bg-color mr-1"></i>
+                      <span class="card_font">Yorum Yap</span>
+                    </button>
+                  </div>
+                  <!-- <div class="col-sm-3 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                        class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+                  <div class="col-sm-2 list-group-item m-2 pb-3 mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                        class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+                  </div> -->
+                </div>
+                {% if comment_post_list %}
+                <div class="col-sm-12 card_font px-3 mt-3">
+                  <h6>Yorumlar:</h6>
+                  {% for comment in comment_post_list %}
+                  <div class="d-flex align-items-center mb-2">
+                    <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
+                    <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
+                  </div>
+                  {% endfor %}
+                </div>
+                {% endif %}<!--CommentEnd-->
+                {% if post.no_of_likes == 0 %}
+          
+                {% else %}
+                <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
+                {% endif %}
+              </div> <!-- CARD END -->
+              {% else %}
+              <div
+                class="pt-3 card navbar-bg-color text-dark text-start row list-group list-group-horizontal border border-black rounded-0 ">
+                <div class="input-group m-3">
+                  <img width="30px" src="{{post.user.profileimg.url}}" alt="" class="mx-2"><span
+                    class="card_font">{{post.user}}</span>
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal{{ post.id }}">...</button>
+                </div><!-- CARD-HEADER END -->
+                <div class="card-body col-sm-12 list-group-item border-0 navbar-bg-color px-5">
+                  <p class="p-font">{{post.caption}}</p>
+                </div> <!-- CARD-BODY END -->
+                <div class="card-footer list-group list-group-horizontal border-0 navbar-bg-color justify-content-center">
+                  <div class="col-sm-2 list-group-item  p-0 border-0 navbar-bg-color"><a href="/like-post?post_id={{post.id}}"><i
+                        class="fa-regular fa-thumbs-up navbar-bg-color mr-1"></i><span class="card_font">Beğen</span></a></div>
+                  <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal{{ post.id }}">
+                      <i class="fa-regular fa-comment navbar-bg-color mr-1"></i>
+                      <span class="card_font">Yorum Yap</span>
+                    </a>
+                  </div>
+                  <!-- <div class="col-sm-3 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                        class="fa-solid fa-retweet navbar-bg-color mr-1"></i><span class="card_font">Gönder</span></a></div>
+                  <div class="col-sm-2 list-group-item  mx-0 p-0 border-0 navbar-bg-color"><a href="#"><i
+                        class="fa-regular fa-share-from-square navbar-bg-color mr-1"></i><span class="card_font">Paylaş</span></a>
+                  </div> -->
+                </div>
+                {% if comment_post_list %}
+                <div class="col-sm-12 card_font px-3 mt-3">
+                  <h6>Yorumlar:</h6>
+                  {% for comment in comment_post_list %}
+                  <div class="d-flex align-items-center mb-2">
+                    <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
+                    <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
+                  </div>
+                  {% endfor %}
+                </div>
+                {% endif %}<!--CommentEnd-->
+                {% if post.no_of_likes == 0 %}
+          
+                {% else %}
+                <div class="col-sm-12 card_font text-secondary px-3">{{post.no_of_likes}} Kişi Tarafından beğenildi.</div>
+                {% endif %}
+              </div> <!-- CARD END -->
+              {% endif %}
             {% endfor %}
           </div> <!--Posts End-->
         </div> <!-- COL-SM-9 END -->
@@ -94,17 +130,7 @@
               </a>
             </div>
             {% endfor %}
-          </div> <!-- CARD END / KISILER --> 
-
-          <div class="card navbar-bg-color text-dark text-start rounded-0 mt-3">
-            <div class="card-body li_font"><b>Sohbet Grupları</b><button id="myBtn"><i class="fa-solid fa-magnifying-glass float-end"></i></button></div>
-            <div class="card-body pt-0">
-              <a href="#">
-                <i class="fa-solid fa-plus mr-1 border border-black rounded rounded-circle p-1"></i>
-                <span class="card_font">Yeni Grup Kur</span>
-              </a>
-            </div>
-          </div> <!-- CARD END -->
+          </div> <!-- CARD END / KISILER -->
         </div> <!-- COL-SM-3 END -->
       </div> <!-- ROW END -->
     </div> <!-- CONTAINER END -->
@@ -197,6 +223,32 @@
         </form>
       </div>
     </div>
+    <!-- CommentModal -->
+    {% for post in posts reversed %}
+    <div class="modal fade" id="commentModal{{ post.id }}" tabindex="-1" aria-labelledby="commentModalLabel{{ post.id }}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="/comment" method="POST">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="commentModalLabel{{ post.id }}">Yorum Yap</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group flex-nowrap">
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <input name="comment" type="text" class="form-control" placeholder="Yorumunuzu Yazın" aria-describedby="addon-wrapping">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+              <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
   <script src="https://kit.fontawesome.com/03397e9a7e.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

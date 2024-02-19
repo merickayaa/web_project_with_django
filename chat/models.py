@@ -15,5 +15,3 @@ class Message(models.Model):
     image = models.ImageField(upload_to='messages_photos', blank=True,null=True)
     date = models.DateTimeField(default=datetime.now)
     is_read = models.BooleanField(default=False)
-
-

@@ -12,6 +12,7 @@ from .models import Message,Thread
 from main.models import User
 import random
 from .forms import ThreadForm,MessageForm
+from main.models import Comment,User,Follower,Post
 # Create your views here.
 class ListThread(View):
     def get(self, request, *args, **kwargs):

@@ -70,19 +70,13 @@
               <a class="nav-link navbar-brand" aria-current="page" href="{% url 'index' %}"><img width="30px" src="{% static 'Images/home.png' %}" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">ANASAYFA</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link navbar-brand" href="#"><img width="30px" src="{% static 'Images/megaphone.png' %}" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">BİLDİRİMLER</span></a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link navbar-brand" href="{% url 'messages' %}" id="message_button"><img width="30px" src="{% static 'Images/bubble-chat.png' %}" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">MESAJ KUTUSU</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link navbar-brand" href="#"><img width="30px" src="{% static 'Images/group.png' %}" alt="" class="mr-1"><span class="ml-1 mr-2 li_font">GRUPLAR</span></a>
             </li>
             <li class="nav-item dropdown">
               <button class="nav-link navbar-brand dropdown-toggle" data-bs-toggle="dropdown" ><img width="30px" src="{{user_profile.profileimg.url}}" alt="" class="mr-1 rounded-circle"><span style="text-transform: uppercase;" class="ml-1 mr-2 li_font">{{user.first_name}} {{user.last_name}}</span></button>
               <ul class="dropdown-menu">
                 <div><a class="nav-link navbar-brand dropdown-item" href="{% url 'dashboard' request.user.username %}">Profil</a></div>
-                <div><a class="nav-link navbar-brand dropdown-item" href="#">Ayarlar</a></div>
+                <!-- <div><a class="nav-link navbar-brand dropdown-item" href="#">Ayarlar</a></div> -->
                 <div><a class="nav-link navbar-brand dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></div>
               </ul>
             </li>

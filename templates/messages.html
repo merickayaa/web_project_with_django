@@ -19,11 +19,8 @@
                     <a href="{% url 'thread' thread.pk %}" class="border-bottom border-black">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-2">
-                                        <img width="30px" src="{{thread.receiver.profileimg.url}}" alt="" class="mr-2">
-                                </div>
                                 <div class="col-sm-10">
-                                    <span class="card_font" style="font-size: 20px;">{{thread.receiver}}</span>
+                                    <span class="card_font" style="font-size: 20px;">{{ thread.user }} ve {{ thread.receiver }}</span>
                                 </div>
                             </div>
                         </div>
