@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'baun_media.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://wbjwwcfucgihkm:6de1609afac6821f53ec7aa9b96b5172a9c79080ed189c71a99651e147dfe373@ec2-34-236-199-229.compute-1.amazonaws.com:5432/d4i5umbeekhbqq', conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.config(default='postgres://hzfqxaocwxaagl:e667f0de684fb96861048eb56188e501b889994430cfc703ddbd2e2a8b8cf2d3@ec2-107-20-161-24.compute-1.amazonaws.com:5432/d1kmjscnsfc8fe', conn_max_age=600, ssl_require=True)
 }
 
 
@@ -141,7 +141,11 @@ STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+CLOUDINARY_STORAGE = {
+             'CLOUD_NAME': 'dxrewvef2',
+             'API_KEY': '548267994538124',
+             'API_SECRET': 'z4dCaKkOuJx2zcg3Dmk0ag78as0'
+            }
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
