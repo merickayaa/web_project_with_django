@@ -11,7 +11,7 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 class User(AbstractUser):
     student_no = models.CharField(max_length=12, unique=True, help_text="4,5 ve 6. rakamlar 214 veya 114 olmalıdır", null=True)   
-    profileimg = models.ImageField(upload_to='profile_images', default='user.png')
+    profileimg = models.ImageField(upload_to='profile_images', default='staticfiles/Images/user.png')
     job = models.CharField(max_length=30, blank=True, null=True)
     company_name = models.CharField(max_length=30, blank=True, null=True)
     TYPE_OF_WORK_OPTIONS = [
