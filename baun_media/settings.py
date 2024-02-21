@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'baun_media.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-import dj_database_url
+
 DATABASES = {
     'default': dj_database_url.config(default='postgres://wbjwwcfucgihkm:6de1609afac6821f53ec7aa9b96b5172a9c79080ed189c71a99651e147dfe373@ec2-34-236-199-229.compute-1.amazonaws.com:5432/d4i5umbeekhbqq', conn_max_age=600, ssl_require=True)
 }
