@@ -5,7 +5,6 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.template.defaultfilters import slugify
-from cloudinary.models import CloudinaryField
 
 
 
