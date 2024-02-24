@@ -86,16 +86,19 @@
               </div> -->
             </div>
             {% if comment_post_list %}
-            <div class="col-sm-12 card_font px-3 mt-3">
-              <h6>Yorumlar:</h6>
-              {% for comment in comment_post_list %}
-              <div class="d-flex align-items-center mb-2">
-                <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
-                <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}<!--CommentEnd-->
+                <div class="col-sm-12 card_font px-3 mt-3">
+                  {% for comment in comment_post_list %}
+                  {% if comment.post.id == post.id %}
+                  <h6>Yorumlar:</h6>
+                  <div class="d-flex align-items-center mb-2">
+                    <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
+                    <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
+                  </div>
+                  {% else %}
+                  {% endif %}
+                  {% endfor %}
+                </div>
+                {% endif %}<!--CommentEnd-->
             
             {% if post.no_of_likes == 0 %}
             
@@ -129,16 +132,19 @@
             </div>
 
             {% if comment_post_list %}
-            <div class="col-sm-12 card_font px-3 mt-3">
-              <h6>Yorumlar:</h6>
-              {% for comment in comment_post_list %}
-              <div class="d-flex align-items-center mb-2">
-                <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
-                <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}<!--CommentEnd-->
+                <div class="col-sm-12 card_font px-3 mt-3">
+                  <h6>Yorumlar:</h6>
+                  {% for comment in comment_post_list %}
+                  {% if comment.post.id == post.id %}
+                  <div class="d-flex align-items-center mb-2">
+                    <img width="20px" src="{{ comment.user.profileimg.url }}" alt="" class="mr-2">
+                    <strong>{{ comment.user.username }}:</strong> {{ comment.text }}
+                  </div>
+                  {% else %}
+                  {% endif %}
+                  {% endfor %}
+                </div>
+                {% endif %}<!--CommentEnd-->
             
             {% if post.no_of_likes == 0 %}
             

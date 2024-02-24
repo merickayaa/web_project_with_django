@@ -53,16 +53,14 @@ def index(request):
         username_profile_list.append(profile_lists)
 
     suggestions_username_profile_list = list(chain(*username_profile_list))
-    comment = []
-    comment_list = []
+    comments = []
     for post in feed_list:
-        comment.append(post.id)
+        comment = Comment.objects.filter(post__id=post.id)
+        comments.append(comment)
     
-    for ids in comment:
-        comment_lists = Comment.objects.filter(post__id=ids)
-        comment_list.append(comment_lists)
 
-    comment_post_list = list(chain(*comment_list))
+
+    comment_post_list = list(chain(*comments))
     return render(request, 'platform.html', {'user_following':user_following,'user_profile':user_object,'comment_post_list':comment_post_list, 'posts':feed_list,'suggestions_username_profile_list':suggestions_username_profile_list[:4]})
 
 
@@ -74,7 +72,7 @@ def comment(request):
         post_id = request.POST.get('post_id')
         # İlgili postu bul
         post = get_object_or_404(Post, id=post_id)
-        print(post)
+        print("1",post)
 
         # Yeni bir Comment nesnesi oluştur ve kaydet
         new_comment = Comment(text=comment_text, post=post, user=request.user)
@@ -359,16 +357,14 @@ def posts(request,user_slug):
         username_profile_list.append(profile_lists)
 
     suggestions_username_profile_list = list(chain(*username_profile_list))
-    comment = []
-    comment_list = []
+    comments = []
     for post in feed_list:
-        comment.append(post.id)
+        comment = Comment.objects.filter(post__id=post.id)
+        comments.append(comment)
     
-    for ids in comment:
-        comment_lists = Comment.objects.filter(post__id=ids)
-        comment_list.append(comment_lists)
 
-    comment_post_list = list(chain(*comment_list))
+
+    comment_post_list = list(chain(*comments))
     context = {
         'user_profile':profile,
         'posts':posts,
